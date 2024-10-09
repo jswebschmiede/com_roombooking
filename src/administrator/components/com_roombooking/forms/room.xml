@@ -42,6 +42,12 @@
                      label="JGLOBAL_FIELD_VERSION_NOTE_LABEL"
                      maxlength="255" />
 
+              <field name="capacity"
+                     type="number"
+                     label="COM_ROOMBOOKING_ROOM_CAPACITY_LBL"
+                     default="0"
+                     min="0" />
+
               <field name="description"
                      type="editor"
                      label="JGLOBAL_DESCRIPTION"
@@ -49,10 +55,15 @@
                      buttons="true"
                      hide="readmore,pagebreak,module,article,contact,menu" />
 
+              <field name="image"
+                     type="media"
+                     label="COM_ROOMBOOKING_ROOM_IMAGE_LBL"
+                     default="" />
+
               <field name="ordering"
                      type="ordering"
                      label="JFIELD_ORDERING_LABEL"
-                     table="#__boilerplate_boilerplate" />
+                     table="#__roombooking_rooms" />
        </fieldset>
 
        <fieldset name="publish"

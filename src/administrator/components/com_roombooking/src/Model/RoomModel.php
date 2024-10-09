@@ -213,7 +213,7 @@ class RoomModel extends AdminModel
 
 		// Alter the name for save as copy
 		if ($input->get('task') == 'save2copy') {
-			/** @var \Joomla\Component\Roombooking\Administrator\Table\RoombookingTable $origTable */
+			/** @var \Joomla\Component\Roombooking\Administrator\Table\RoomTable $origTable */
 			$origTable = clone $this->getTable();
 			$origTable->load($input->getInt('id'));
 

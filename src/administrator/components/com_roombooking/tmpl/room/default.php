@@ -44,7 +44,9 @@ $form = $this->getForm();
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_ROOMBOOKING_ROOM_DETAILS')); ?>
 		<div class="row">
 			<div class="col-lg-9">
+				<?php echo $form->renderField('capacity'); ?>
 				<?php echo $form->renderField('description'); ?>
+				<?php echo $form->renderField('image'); ?>
 			</div>
 			<div class="col-lg-3">
 				<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>

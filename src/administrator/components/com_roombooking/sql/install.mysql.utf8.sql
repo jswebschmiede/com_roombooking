@@ -3,6 +3,8 @@ CREATE TABLE IF NOT EXISTS `#__roombooking_rooms` (
 	`name` varchar(255) NOT NULL,
 	`alias` varchar(400) NOT NULL DEFAULT '',
 	`description` text,
+	`capacity` int(10) NOT NULL DEFAULT 0,
+	`image` varchar(255) NOT NULL DEFAULT '',
 	`created` datetime NOT NULL,
 	`language` varchar(7) NOT NULL,
 	`created_by` int(10) unsigned NOT NULL DEFAULT 0,

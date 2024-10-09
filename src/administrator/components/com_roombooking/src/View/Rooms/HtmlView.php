@@ -8,7 +8,7 @@
  * @author      Jörg Schöneburg <info@joerg-schoeneburg.de> - https://joerg-schoeneburg.de
  */
 
-namespace Joomla\Component\Roombooking\Administrator\View\Roombookings;
+namespace Joomla\Component\Roombooking\Administrator\View\Rooms;
 
 defined('_JEXEC') or die;
 

@@ -8,7 +8,7 @@
  * @author      Jörg Schöneburg <info@joerg-schoeneburg.de> - https://joerg-schoeneburg.de
  */
 
-namespace Joomla\Component\Roombooking\Administrator\View\Roombooking;
+namespace Joomla\Component\Roombooking\Administrator\View\Room;
 
 defined('_JEXEC') or die;
 
@@ -22,7 +22,6 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\Component\Content\Administrator\Helper\ContentHelper;
-use Joomla\Component\Roombooking\Administrator\Model\RoombookingModel;
 
 /**
  * View class for a list of rooms.
