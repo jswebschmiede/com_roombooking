@@ -8,13 +8,12 @@
  * @author      Jörg Schöneburg <info@joerg-schoeneburg.de> - https://joerg-schoeneburg.de
  */
 
-// No direct access
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
-/** @var \Joomla\Component\RoomBooking\Site\View\Room\HtmlView $this */
+/** @var \Joomla\Component\Roombooking\Site\View\Room\HtmlView $this */
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
@@ -34,7 +33,7 @@ $wa->useStyle('com_roombooking.style');
 	</div>
 <?php endif; ?>
 
-<div class="com_roombooking room-<?php echo $this->item->id; ?> room-item ">
+<div class="com_roombooking room-<?php echo $this->item->id; ?> room-item">
 	<div class="row">
 		<div class="col-12 mb-4">
 			<h2><?php echo $this->item->name; ?></h2>

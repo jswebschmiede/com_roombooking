@@ -54,7 +54,29 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected $state;
 
+	/**
+	 * The filter form
+	 *
+	 * @var    \Joomla\CMS\Form\Form
+	 * @since  1.6
+	 */
+	protected $filterForm;
 
+	/**
+	 * The active filters
+	 *
+	 * @var    array
+	 * @since  1.6
+	 */
+	protected $activeFilters;
+
+	/**
+	 * Execute and display a template script.
+	 *
+	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 *
+	 * @return  mixed  A string if successful, otherwise an Error object.
+	 */
 	public function display($tpl = null): void
 	{
 		$this->state = $this->get('State');
