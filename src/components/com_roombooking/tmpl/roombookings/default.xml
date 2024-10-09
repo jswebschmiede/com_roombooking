@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<layout title="COM_ROOMBOOKING_ROOMS_VIEW_DEFAULT_TITLE"
+			option="View">
+		<message>
+			<![CDATA[COM_ROOMBOOKING_ROOMS_VIEW_DEFAULT_DESC]]>
+		</message>
+	</layout>
+
+	<fields name="params">
+		<fieldset name="basic">
+			<!-- Define your basic params for the view here -->
+		</fieldset>
+	</fields>
+</metadata>

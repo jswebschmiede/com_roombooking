@@ -1,0 +1,25 @@
+{
+    "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "com_roombooking",
+    "version": "1.0.0",
+    "description": "Assets for the room booking component",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "com_roombooking.main",
+            "type": "script",
+            "uri": "com_roombooking/main.bundle.js",
+            "dependencies": ["core"],
+            "attributes": {
+                "defer": true
+            },
+            "version": "1.0.0"
+        },
+        {
+            "name": "com_roombooking.style",
+            "type": "style",
+            "uri": "com_roombooking/style.min.css",
+            "version": "1.0.0"
+        }
+    ]
+}

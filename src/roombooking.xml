@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="component"
+           method="upgrade">
+    <name>com_roombooking</name>
+    <version>1.0.0</version>
+    <description>COM_ROOMBOOKING_XML_DESCRIPTION</description>
+    <author>Jörg Schöneburg</author>
+    <creationDate>2024-05-15</creationDate>
+    <copyright>(C) 2024 Jörg Schöneburg. All rights reserved.</copyright>
+    <license>MIT</license>
+    <namespace path="src">Joomla\Component\Roombooking</namespace>
+
+    <!-- Runs on install -->
+    <install>
+        <sql>
+            <file driver="mysql"
+                  charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+
+    <!-- Runs on uninstall -->
+    <uninstall>
+        <sql>
+            <file driver="mysql"
+                  charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+
+    <administration>
+        <files folder="administrator/components/com_roombooking">
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
+            <folder>tmpl</folder>
+            <folder>forms</folder>
+            <folder>services</folder>
+            <folder>sql</folder>
+            <folder>src</folder>
+        </files>
+
+        <languages folder="administrator/components/com_roombooking/language">
+            <language tag="en-GB">en-GB/com_roombooking.ini</language>
+            <language tag="en-GB">en-GB/com_roombooking.sys.ini</language>
+        </languages>
+
+        <menu>COM_ROOMBOOKING</menu>
+
+        <submenu>
+            <menu link="option=com_roombooking&amp;view=rooms"
+                  view="rooms">
+                COM_ROOMBOOKING_MENU_ROOMS
+            </menu>
+            <menu link="option=com_roombooking&amp;view=bookings"
+                  view="bookings">
+                COM_ROOMBOOKING_MENU_BOOKINGS
+            </menu>
+        </submenu>
+    </administration>
+
+    <files folder="components/com_roombooking">
+        <folder>src</folder>
+        <folder>tmpl</folder>
+    </files>
+    <!-- 
+    <languages folder="language">
+        <language tag="en-GB">en-GB/com_roombooking.ini</language>
+    </languages> -->
+
+    <media destination="com_roombooking"
+           folder="media/com_roombooking">
+        <filename>joomla.asset.json</filename>
+        <folder>js</folder>
+        <folder>css</folder>
+    </media>
+</extension>
