@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Layout\LayoutHelper;
 
-/** @var \Joomla\Component\Roombooking\Administrator\View\Roombookings\HtmlView $this */
+/** @var \Joomla\Component\Roombooking\Administrator\View\Rooms\HtmlView $this */
 
 $displayData = [
     'textPrefix' => 'COM_ROOMBOOKING',

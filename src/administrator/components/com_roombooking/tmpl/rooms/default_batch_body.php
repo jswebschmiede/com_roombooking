@@ -14,7 +14,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Language\Multilanguage;
 
-/** @var \Joomla\Component\Roombooking\Administrator\View\Roombookings\HtmlView $this */
+/** @var \Joomla\Component\Roombooking\Administrator\View\Rooms\HtmlView $this */
 
 $state = $this->getState();
 $published = (int) $state->get('filter.published');
@@ -23,20 +23,20 @@ $published = (int) $state->get('filter.published');
 <div class="p-3">
     <div class="row">
         <?php if (Multilanguage::isEnabled()): ?>
-                <div class="form-group col-md-6">
-                    <div class="controls">
-                        <?php echo LayoutHelper::render('joomla.html.batch.language', []); ?>
-                    </div>
+            <div class="form-group col-md-6">
+                <div class="controls">
+                    <?php echo LayoutHelper::render('joomla.html.batch.language', []); ?>
                 </div>
+            </div>
         <?php endif; ?>
     </div>
     <div class="row">
         <?php if ($published >= 0): ?>
-                <div class="form-group col-md-6">
-                    <div class="controls">
-                        <?php echo LayoutHelper::render('joomla.html.batch.item', ['extension' => 'com_roombooking']); ?>
-                    </div>
+            <div class="form-group col-md-6">
+                <div class="controls">
+                    <?php echo LayoutHelper::render('joomla.html.batch.item', ['extension' => 'com_roombooking']); ?>
                 </div>
+            </div>
         <?php endif; ?>
     </div>
 </div>

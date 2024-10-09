@@ -30,8 +30,6 @@ use Joomla\Component\Content\Administrator\Helper\ContentHelper;
  */
 class HtmlView extends BaseHtmlView
 {
-
-
 	/**
 	 * An object of item
 	 *

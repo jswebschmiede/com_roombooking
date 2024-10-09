@@ -15,7 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\LayoutHelper;
 
-/** @var \Joomla\Component\Roombooking\Administrator\View\Roombooking\HtmlView $this */
+/** @var \Joomla\Component\Roombooking\Administrator\View\Room\HtmlView $this */
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();

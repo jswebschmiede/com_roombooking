@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Multilanguage;
 
 defined('_JEXEC') or die;
 
-/** @var \Joomla\Component\Roombooking\Administrator\View\Roombookings\HtmlView $this */
+/** @var \Joomla\Component\Roombooking\Administrator\View\Rooms\HtmlView $this */
 
 /** @var \Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
