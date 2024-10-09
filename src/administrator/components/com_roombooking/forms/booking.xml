@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="Joomla\Component\RoomBooking\Administrator\Field">
+       <fieldset name="details">
+              <field name="state"
+                     type="list"
+                     label="JSTATUS"
+                     class="form-select-color-state"
+                     default="1"
+                     validate="options">
+                     <option value="1">JPUBLISHED</option>
+                     <option value="0">JUNPUBLISHED</option>
+                     <option value="2">JARCHIVED</option>
+                     <option value="-2">JTRASHED</option>
+              </field>
+
+              <field name="id"
+                     type="text"
+                     default="0"
+                     label="COM_ROOMBOOKING_FORM_LBL_BOOKING_ID"
+                     readonly="true"
+                     class="readonly"
+                     description="JGLOBAL_FIELD_ID_DESC" />
+
+              <field name="room_id"
+                     type="sql"
+                     label="COM_ROOMBOOKING_BOOKING_ROOM_LBL"
+                     query="SELECT id, name FROM #__roombooking_rooms WHERE state = 1"
+                     key_field="id"
+                     value_field="name"
+                     default=""
+                     required="true" />
+
+              <field name="name"
+                     type="text"
+                     label="COM_ROOMBOOKING_FIELD_NAME_LABEL"
+                     default=""
+                     required="true" />
+
+              <field name="booking_date"
+                     type="calendar"
+                     label="COM_ROOMBOOKING_BOOKING_DATE_LBL"
+                     showtime="true"
+                     filter="user_utc"
+                     translateformat="true"
+                     required="true"
+                     default="" />
+
+              <field name="confirmed"
+                     type="radio"
+                     label="COM_ROOMBOOKING_BOOKING_CONFIRMED_LBL"
+                     default="0"
+                     class="btn-group btn-group-yesno">
+                     <option value="1">JYES</option>
+                     <option value="0">JNO</option>
+              </field>
+
+              <field name="payment_status"
+                     type="list"
+                     label="COM_ROOMBOOKING_BOOKING_PAYMENT_STATUS_LBL"
+                     default="unpaid">
+                     <option value="unpaid">COM_ROOMBOOKING_PAYMENT_STATUS_UNPAID</option>
+                     <option value="paid">COM_ROOMBOOKING_PAYMENT_STATUS_PAID</option>
+                     <option value="cancelled">COM_ROOMBOOKING_PAYMENT_STATUS_CANCELLED</option>
+              </field>
+
+              <field name="recurring"
+                     type="radio"
+                     label="COM_ROOMBOOKING_BOOKING_RECURRING_LBL"
+                     default="0"
+                     class="btn-group btn-group-yesno">
+                     <option value="1">JYES</option>
+                     <option value="0">JNO</option>
+              </field>
+
+              <field name="recurrence_type"
+                     type="list"
+                     label="COM_ROOMBOOKING_BOOKING_RECURRENCE_TYPE_LBL"
+                     showon="recurring:1">
+                     <option value="none">COM_ROOMBOOKING_SELECT_RECURRENCE_TYPE</option>
+                     <option value="weekly">COM_ROOMBOOKING_WEEKLY</option>
+                     <option value="biweekly">COM_ROOMBOOKING_BIWEEKLY</option>
+                     <option value="monthly">COM_ROOMBOOKING_MONTHLY</option>
+              </field>
+
+              <field name="recurrence_end_date"
+                     type="calendar"
+                     label="COM_ROOMBOOKING_BOOKING_RECURRENCE_END_DATE_LBL"
+                     showon="recurring:1"
+                     showtime="true"
+                     filter="user_utc"
+                     translateformat="true"
+                     default="" />
+
+              <field name="ordering"
+                     type="ordering"
+                     label="JFIELD_ORDERING_LABEL"
+                     table="#__roombooking_bookings" />
+       </fieldset>
+
+       <fieldset name="customer_info">
+              <field name="customer_name"
+                     type="text"
+                     label="COM_ROOMBOOKING_BOOKING_CUSTOMER_NAME_LBL"
+                     default=""
+                     required="true" />
+
+              <field name="customer_address"
+                     type="textarea"
+                     label="COM_ROOMBOOKING_BOOKING_CUSTOMER_ADDRESS_LBL"
+                     rows="3"
+                     cols="30"
+                     default=""
+                     required="true" />
+
+              <field name="customer_phone"
+                     type="telephone"
+                     label="COM_ROOMBOOKING_BOOKING_CUSTOMER_PHONE_LBL"
+                     default="" />
+
+              <field name="customer_email"
+                     type="email"
+                     label="COM_ROOMBOOKING_BOOKING_CUSTOMER_EMAIL_LBL"
+                     default=""
+                     filter="email"
+                     required="true" />
+       </fieldset>
+</form>

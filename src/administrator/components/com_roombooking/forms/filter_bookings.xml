@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fields name="filter">
+        <field name="search"
+               type="text"
+               label="COM_ROOMBOOKING_FILTER_SEARCH_LABEL"
+               description="COM_ROOMBOOKING_FILTER_SEARCH_DESC"
+               hint="JSEARCH_FILTER" />
+
+        <field name="published"
+               type="status"
+               label="JSTATUS"
+               class="js-select-submit-on-change"
+               extension="com_roombooking">
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+        </field>
+
+        <field name="room_id"
+               type="sql"
+               label="COM_ROOMBOOKING_FILTER_ROOM_LABEL"
+               query="SELECT id, name FROM #__roombooking_rooms WHERE state = 1"
+               key_field="id"
+               value_field="name"
+               class="js-select-submit-on-change">
+            <option value="">COM_ROOMBOOKING_SELECT_ROOM</option>
+        </field>
+
+        <field name="recurring"
+               type="list"
+               label="COM_ROOMBOOKING_FILTER_RECURRING_LABEL"
+               class="js-select-submit-on-change">
+            <option value="">COM_ROOMBOOKING_SELECT_RECURRING</option>
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field name="payment_status"
+               type="list"
+               label="COM_ROOMBOOKING_BOOKING_PAYMENT_STATUS_LBL"
+               class="js-select-submit-on-change">
+            <option value="">COM_ROOMBOOKING_SELECT_PAYMENT_STATUS</option>
+            <option value="unpaid">COM_ROOMBOOKING_PAYMENT_STATUS_UNPAID</option>
+            <option value="paid">COM_ROOMBOOKING_PAYMENT_STATUS_PAID</option>
+            <option value="cancelled">COM_ROOMBOOKING_PAYMENT_STATUS_CANCELLED</option>
+        </field>
+    </fields>
+
+    <fields name="list">
+        <field name="fullordering"
+               type="list"
+               label="JGLOBAL_SORT_BY"
+               statuses="*,0,1,2,-2"
+               class="js-select-submit-on-change"
+               default="a.booking_date DESC"
+               validate="options">
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="a.title ASC">
+                COM_ROOMBOOKING_TITLE_ASC</option>
+            <option value="a.title DESC">
+                COM_ROOMBOOKING_TITLE_DESC</option>
+            <option value="a.booking_date ASC">
+                COM_ROOMBOOKING_BOOKING_DATE_ASC</option>
+            <option value="a.booking_date DESC">
+                COM_ROOMBOOKING_BOOKING_DATE_DESC</option>
+            <option value="a.end_date ASC">
+                COM_ROOMBOOKING_END_DATE_ASC</option>
+            <option value="a.end_date DESC">
+                COM_ROOMBOOKING_END_DATE_DESC</option>
+            <option value="a.state ASC">JSTATUS_ASC</option>
+            <option value="a.state DESC">
+                JSTATUS_DESC</option>
+            <option value="a.created ASC">JDATE_ASC</option>
+            <option value="a.created DESC">
+                JDATE_DESC</option>
+            <option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+            <option value="a.id DESC">
+                JGRID_HEADING_ID_DESC</option>
+        </field>
+
+        <field name="limit"
+               type="limitbox"
+               label="JGLOBAL_LIST_LIMIT"
+               default="25"
+               class="js-select-submit-on-change" />
+    </fields>
+</form>
