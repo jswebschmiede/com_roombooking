@@ -10,10 +10,12 @@
 
 namespace Joomla\Component\Roombooking\Site\View\Rooms;
 
+use NumberFormatter;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\Component\Roombooking\Site\Helper\RouteHelper;
+use Joomla\Component\Roombooking\Site\Helper\RoombookingHelper;
 
 defined('_JEXEC') or die;
 
@@ -75,7 +77,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
 	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
+	 * @return  void
 	 */
 	public function display($tpl = null): void
 	{
@@ -91,6 +93,7 @@ class HtmlView extends BaseHtmlView
 
 		foreach ($this->items as &$item) {
 			$item->link = Route::_(RouteHelper::getRoomRoute($item->id, $item->alias));
+			$item->price = RoombookingHelper::formatPrice($item->price);
 		}
 
 		// Check for errors.

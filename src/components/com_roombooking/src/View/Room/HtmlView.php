@@ -12,9 +12,11 @@ namespace Joomla\Component\Roombooking\Site\View\Room;
 
 defined('_JEXEC') or die;
 
+use NumberFormatter;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\Component\Roombooking\Site\Helper\RoombookingHelper;
 
 /**
  * HTML Room View class for the Roombooking component
@@ -53,9 +55,9 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
 	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
+	 * @return  void
 	 */
-	public function display($tpl = null)
+	public function display($tpl = null): void
 	{
 		$app = Factory::getApplication();
 		$this->item = $this->get('Item');
@@ -72,7 +74,8 @@ class HtmlView extends BaseHtmlView
 
 		// Add router helpers.
 		$item->slug = $item->alias ? ($item->id . ':' . $item->alias) : $item->id;
+		$item->price = RoombookingHelper::formatPrice($item->price);
 
-		return parent::display($tpl);
+		parent::display($tpl);
 	}
 }
