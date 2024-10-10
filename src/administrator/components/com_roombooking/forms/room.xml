@@ -48,6 +48,27 @@
                      default="0"
                      min="0" />
 
+              <field name="size"
+                     type="number"
+                     label="COM_ROOMBOOKING_ROOM_SIZE_LBL"
+                     default="0"
+                     min="0" />
+
+              <field name="price"
+                     type="number"
+                     label="COM_ROOMBOOKING_ROOM_PRICE_LBL"
+                     default="0.00"
+                     min="0"
+                     step="1"
+                     filter="float" />
+
+              <field name="short_description"
+                     type="editor"
+                     label="COM_ROOMBOOKING_ROOM_SHORT_DESCRIPTION_LBL"
+                     filter="\Joomla\CMS\Component\ComponentHelper::filterText"
+                     buttons="true"
+                     hide="readmore,pagebreak,module,article,contact,menu" />
+
               <field name="description"
                      type="editor"
                      label="JGLOBAL_DESCRIPTION"

@@ -86,6 +86,8 @@ class RoomsModel extends ListModel
 					$db->quoteName('a.state'),
 					$db->quoteName('a.capacity'),
 					$db->quoteName('a.image'),
+					$db->quoteName('a.size'),
+					$db->quoteName('a.price'),
 					$db->quoteName('a.ordering'),
 					$db->quoteName('a.language'),
 					$db->quoteName('a.metakey'),

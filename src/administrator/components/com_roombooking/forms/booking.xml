@@ -54,6 +54,14 @@
                      <option value="0">JNO</option>
               </field>
 
+              <field name="total_amount"
+                     type="number"
+                     label="COM_ROOMBOOKING_BOOKING_TOTAL_AMOUNT_LBL"
+                     default="0.00"
+                     min="0"
+                     step="1.0"
+                     filter="float" />
+
               <field name="payment_status"
                      type="list"
                      label="COM_ROOMBOOKING_BOOKING_PAYMENT_STATUS_LBL"

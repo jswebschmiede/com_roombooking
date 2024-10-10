@@ -95,6 +95,9 @@ class BookingsModel extends ListModel
 		// Compile the store id.
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.published');
+		$id .= ':' . $this->getState('filter.room_id');
+		$id .= ':' . $this->getState('filter.recurring');
+		$id .= ':' . $this->getState('filter.payment_status');
 
 		return parent::getStoreId($id);
 	}
@@ -129,14 +132,34 @@ class BookingsModel extends ListModel
 		// Join with the rooms table to get the room name
 		$query->join('LEFT', $db->quoteName('#__roombooking_rooms', 'r') . ' ON r.id = a.room_id');
 
+		// Filter by payment status
+		$paymentStatus = $this->getState('filter.payment_status');
+		if (!empty($paymentStatus)) {
+			$query->where($db->quoteName('a.payment_status') . ' = :paymentStatus')
+				->bind(':paymentStatus', $paymentStatus, ParameterType::STRING);
+		}
+
+		// Filter by recurring status
+		$recurring = $this->getState('filter.recurring');
+		if (is_numeric($recurring)) {
+			$query->where($db->quoteName('a.recurring') . ' = :recurring')
+				->bind(':recurring', $recurring, ParameterType::INTEGER);
+		}
+
 		// Filter by published state
 		$published = (string) $this->getState('filter.published');
-
 		if (is_numeric($published)) {
 			$query->where($db->quoteName('a.state') . ' = :published')
 				->bind(':published', $published, ParameterType::INTEGER);
 		} elseif ($published === '') {
 			$query->where($db->quoteName('a.state') . ' IN (0, 1)');
+		}
+
+		// Filter by room_id
+		$roomId = $this->getState('filter.room_id');
+		if (is_numeric($roomId) && $roomId > 0) {
+			$query->where($db->quoteName('a.room_id') . ' = :roomId')
+				->bind(':roomId', $roomId, ParameterType::INTEGER);
 		}
 
 		// Search filter

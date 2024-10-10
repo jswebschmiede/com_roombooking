@@ -70,7 +70,7 @@ class RoomsModel extends ListModel
                 'a.language',
                 'published',
                 'created',
-                'a.created'
+                'a.created',
             ];
         }
 
@@ -93,7 +93,6 @@ class RoomsModel extends ListModel
         // Compile the store id.
         $id .= ':' . $this->getState('filter.extension');
         $id .= ':' . $this->getState('filter.published');
-        $id .= ':' . $this->getState('filter.parentId');
         $id .= ':' . $this->getState('list.limit');
         $id .= ':' . $this->getState('list.start');
         $id .= ':' . $this->getState('list.ordering');
@@ -210,6 +209,8 @@ class RoomsModel extends ListModel
             $db->quoteName('a.modified'),
             $db->quoteName('a.modified_by'),
             $db->quoteName('a.description'),
+            $db->quoteName('a.image'),
+            $db->quoteName('a.capacity'),
             $db->quoteName('l.title', 'language_title'),
             $db->quoteName('l.image', 'language_image'),
             $db->quoteName('u.name', 'author')

@@ -52,7 +52,7 @@ $form = $this->getForm();
 				<?php echo $form->renderField('recurring'); ?>
 				<?php echo $form->renderField('recurrence_type'); ?>
 				<?php echo $form->renderField('recurrence_end_date'); ?>
-
+				<?php echo $form->renderField('total_amount'); ?>
 			</div>
 			<div class="col-lg-3">
 				<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>

@@ -45,8 +45,11 @@ $form = $this->getForm();
 		<div class="row">
 			<div class="col-lg-9">
 				<?php echo $form->renderField('capacity'); ?>
+				<?php echo $form->renderField('short_description'); ?>
 				<?php echo $form->renderField('description'); ?>
 				<?php echo $form->renderField('image'); ?>
+				<?php echo $form->renderField('size'); ?>
+				<?php echo $form->renderField('price'); ?>
 			</div>
 			<div class="col-lg-3">
 				<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
