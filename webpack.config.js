@@ -3,10 +3,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const chalk = require('chalk');
 const logSymbols = require('log-symbols');
+const fs = require('fs');
+const rimraf = require('rimraf');
 
 let lastPercentage = 0;
 
@@ -49,6 +50,14 @@ const createProgressBar = (percentage) => {
     return chalk.green('█'.repeat(filledWidth)) + chalk.gray('█'.repeat(emptyWidth));
 };
 
+const cleanDirectories = (directories) => {
+    directories.forEach((dir) => {
+        if (fs.existsSync(dir)) {
+            rimraf.sync(`${dir}/*`);
+        }
+    });
+};
+
 module.exports = (env, argv) => {
     const isProduction = argv.mode === 'production';
     const joomlaPath = path.resolve(__dirname, '../../joomla');
@@ -72,6 +81,15 @@ module.exports = (env, argv) => {
         { from: 'src/api', to: 'api', noErrorOnMissing: true },
         { from: 'src/roombooking.xml', to: 'roombooking.xml' },
     ];
+
+    const directoriesToClean = [
+        path.join(joomlaPath, 'administrator/components/com_roombooking'),
+        path.join(joomlaPath, 'components/com_roombooking'),
+        path.join(joomlaPath, 'media/com_roombooking'),
+    ];
+
+    // Clean directories before build
+    cleanDirectories(directoriesToClean);
 
     if (!isProduction) {
         copyPatterns.push(
@@ -160,18 +178,6 @@ module.exports = (env, argv) => {
             }),
             new MiniCssExtractPlugin({
                 filename: 'media/com_roombooking/css/styles.min.css',
-            }),
-            new CleanWebpackPlugin({
-                cleanOnceBeforeBuildPatterns: [
-                    path.join(joomlaPath, 'administrator/components/com_roombooking/**/*'),
-                    path.join(joomlaPath, 'components/com_roombooking/**/*'),
-                    path.join(joomlaPath, 'media/com_roombooking/**/*'),
-                    `!${path.join(joomlaPath, 'administrator/components/com_roombooking')}`,
-                    `!${path.join(joomlaPath, 'components/com_roombooking')}`,
-                    `!${path.join(joomlaPath, 'media/com_roombooking')}`,
-                ],
-                cleanAfterEveryBuildPatterns: [],
-                dangerouslyAllowCleanPatternsOutsideProject: true,
             }),
             new CopyPlugin({
                 patterns: copyPatterns,
