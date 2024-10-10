@@ -8,7 +8,7 @@
  * @author      Jörg Schöneburg <info@joerg-schoeneburg.de> - https://joerg-schoeneburg.de
  */
 
-namespace Joomla\Component\Roombooking\Site\View\Roombooking;
+namespace Joomla\Component\Roombooking\Site\View\Room;
 
 defined('_JEXEC') or die;
 
@@ -17,7 +17,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
- * HTML Roombooking View class for the Roombooking component
+ * HTML Room View class for the Roombooking component
  *
  * @since  1.0.0
  */

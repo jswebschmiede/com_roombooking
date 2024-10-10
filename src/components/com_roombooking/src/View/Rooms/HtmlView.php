@@ -8,7 +8,7 @@
  * @author      Jörg Schöneburg <info@joerg-schoeneburg.de> - https://joerg-schoeneburg.de
  */
 
-namespace Joomla\Component\Roombooking\Site\View\Roombookings;
+namespace Joomla\Component\Roombooking\Site\View\Rooms;
 
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\MVC\View\GenericDataException;
@@ -18,7 +18,7 @@ use Joomla\Component\Roombooking\Site\Helper\RouteHelper;
 defined('_JEXEC') or die;
 
 /**
- * Roombookings list view
+ * Rooms list view
  */
 class HtmlView extends BaseHtmlView
 {
