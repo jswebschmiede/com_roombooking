@@ -94,6 +94,11 @@ class RoomModel extends ItemModel
 						$db->quoteName('a.name'),
 						$db->quoteName('a.alias'),
 						$db->quoteName('a.description'),
+						$db->quoteName('a.short_description'),
+						$db->quoteName('a.image'),
+						$db->quoteName('a.size'),
+						$db->quoteName('a.price'),
+						$db->quoteName('a.capacity'),
 						$db->quoteName('a.created'),
 						$db->quoteName('a.created_by'),
 						$db->quoteName('a.modified'),
@@ -101,7 +106,7 @@ class RoomModel extends ItemModel
 						$db->quoteName('a.language'),
 						$db->quoteName('l.title', 'language_title'),
 						$db->quoteName('l.image', 'language_image'),
-						$db->quoteName('u.name', 'author')
+						$db->quoteName('u.name', 'author'),
 					]
 				))
 					->from($db->quoteName('#__roombooking_rooms', 'a'))
