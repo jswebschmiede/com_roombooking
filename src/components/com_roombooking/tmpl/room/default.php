@@ -17,12 +17,35 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 /** @var \Joomla\Component\Roombooking\Site\View\Room\HtmlView $this */
 
+/** @var \Joomla\CMS\Document\HtmlDocument $doc */
+$doc = Factory::getApplication()->getDocument();
+
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa = $doc->getWebAssetManager();
 $wa->useScript('com_roombooking.main');
 $wa->useStyle('com_roombooking.style');
-
 HTMLHelper::_('bootstrap.tooltip', '.hasTooltip');
+
+// Demo booking data
+$bookedDates = json_encode([
+	[
+		'start' => date('Y-m-d', strtotime('+3 days')),
+	],
+	[
+		'start' => date('Y-m-d', strtotime('+10 days')),
+	],
+	[
+		'start' => date('Y-m-d', strtotime('+20 days')),
+	]
+]);
+
+// Calculate the end date (3 years from today)
+$endDate = date('Y-m-d', strtotime('+3 years'));
+
+$doc->addScriptOptions('com_roombooking', [
+	'bookedDates' => $bookedDates,
+	'endDate' => $endDate
+]);
 ?>
 
 <?php if ($this->params->get('show_page_heading')): ?>
@@ -68,33 +91,61 @@ HTMLHelper::_('bootstrap.tooltip', '.hasTooltip');
 					</div>
 				</figure>
 			</div>
+
+			<div class="col-12">
+				<h2 class="mb-4"><?php echo $this->item->name; ?></h2>
+				<div class="room-description">
+					<?php echo $this->item->description; ?>
+				</div>
+			</div>
 		</div>
-		<form
-			action="<?php echo Route::_('index.php?option=com_roombooking&task=room.booking&id=' . $this->item->id); ?>"
-			method="post" class="room-booking-form">
-			<div class="row">
-				<div class="col-md-5">
-					<div class="room-sidebar">
-						<h3>Raum buchen</h3>
-						<div class="recurring-booking">
-							<div class="form-check">
-								<input type="checkbox" class="form-check-input" id="recurring-booking"
-									name="recurring-booking">
-								<label for="recurring-booking" class="form-check-label">Wiederkehrende Buchung</label>
+
+		<div class="row mt-3">
+			<div class="col-12">
+				<form
+					action="<?php echo Route::_('index.php?option=com_roombooking&task=room.booking&id=' . $this->item->id); ?>"
+					method="post" class="room-booking-form card">
+					<div class="card-header ">
+						<h3 class="card-title">Raum buchen</h3>
+					</div>
+
+					<div class="card-body">
+						<div class="row gx-5">
+							<div class="col-md-5">
+								<div class="room-sidebar">
+									<div id="booking-calendar"></div>
+									<p class="small text-muted mt-1">
+										Bitte wählen Sie ein Datum aus, um den gewünschten Raum zu buchen. Rot markierte
+										Tage sind bereits gebucht.
+									</p>
+								</div>
+							</div>
+							<div class="col-md-7">
+								<div class="mt-4">
+									<div class="recurring-booking mt-3">
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="recurring-booking"
+												name="recurring-booking">
+											<label for="recurring-booking" class="form-check-label">
+												Wiederkehrende Buchung
+											</label>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-12 text-end">
+								<button type="submit" class="btn btn-primary">Kostenpflichtig buchen</button>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-md-7">
-					<h2 class="mb-4"><?php echo $this->item->name; ?></h2>
-
-					<div class="room-description">
-						<?php echo $this->item->description; ?>
-					</div>
-				</div>
+					<input type="hidden" id="booking-date" name="booking_date">
+					<?php echo HTMLHelper::_('form.token'); ?>
+				</form>
 			</div>
-
-			<?php echo HTMLHelper::_('form.token'); ?>
-		</form>
+		</div>
 	</div>
 </div>

@@ -44,15 +44,27 @@ $form = $this->getForm();
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_ROOMBOOKING_ROOM_DETAILS')); ?>
 		<div class="row">
 			<div class="col-lg-9">
-				<?php echo $form->renderField('capacity'); ?>
 				<?php echo $form->renderField('short_description'); ?>
 				<?php echo $form->renderField('description'); ?>
-				<?php echo $form->renderField('image'); ?>
+				<?php echo $form->renderField('capacity'); ?>
 				<?php echo $form->renderField('size'); ?>
 				<?php echo $form->renderField('price'); ?>
 			</div>
 			<div class="col-lg-3">
 				<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
+			</div>
+		</div>
+		<?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'images', Text::_('COM_ROOMBOOKING_ROOM_IMAGE')); ?>
+		<div class="row">
+			<div class="col-md-6">
+				<fieldset id="fieldset-images" class="options-form">
+					<legend><?php echo Text::_('COM_ROOMBOOKING_ROOM_IMAGE'); ?></legend>
+					<div>
+						<?php echo $form->renderField('image'); ?>
+					</div>
+				</fieldset>
 			</div>
 		</div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>

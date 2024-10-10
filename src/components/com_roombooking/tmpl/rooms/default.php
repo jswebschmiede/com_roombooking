@@ -63,12 +63,13 @@ HTMLHelper::_('bootstrap.tooltip', '.hasTooltip');
 										<span><?php echo $item->capacity; ?>
 											<?php echo Text::_('COM_ROOMBOOKING_PERSONS'); ?></span>
 									</li>
-									<li class="d-flex align-items-center mb-2">
+									<li class="d-flex align-items-center">
 										<i class="fas fa-ruler-combined me-2 text-primary hasTooltip"
 											title="<?php echo Text::_('COM_ROOMBOOKING_ROOM_SIZE'); ?>"></i>
 										<span><?php echo $item->size; ?> m²</span>
 									</li>
 								</ul>
+								<?php echo $item->short_description; ?>
 							</div>
 							<a href="<?php echo $item->link; ?>" class="btn btn-outline-primary mt-auto">
 								<?php echo Text::_('COM_ROOMBOOKING_MORE_DETAILS'); ?>

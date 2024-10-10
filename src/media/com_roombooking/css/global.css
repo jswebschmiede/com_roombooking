@@ -2,6 +2,70 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    @apply bg-white;
+:root {
+    /* Bootstrap 5 Graustufen */
+    --bs-gray-100: #f8f9fa;
+    --bs-gray-200: #e9ecef;
+    --bs-gray-300: #dee2e6;
+    --bs-gray-400: #ced4da;
+    --bs-gray-500: #adb5bd;
+    --bs-gray-600: #6c757d;
+    --bs-gray-700: #495057;
+    --bs-gray-800: #343a40;
+    --bs-gray-900: #212529;
+    --fc-highlight-color: #b8e0b8;
+}
+
+.room-image {
+    @apply h-[380px] w-full;
+}
+
+.room-image .figure-img {
+    @apply object-cover object-bottom w-full h-full;
+}
+
+.larger-badge {
+    @apply !text-sm !py-2 !px-3;
+}
+
+/* Fullcalendar */
+.fc .booked-date .fc-bg-event {
+    @apply bg-red-300 !cursor-not-allowed;
+}
+
+.fc .booked-date .fc-daygrid-day-number {
+    @apply !text-red-600 !cursor-not-allowed;
+}
+
+.fc .unavailable-date .fc-bg-event {
+    @apply bg-gray-200 text-gray-600 !cursor-not-allowed;
+}
+
+.fc-toolbar-chunk .btn-group {
+    @apply mb-0;
+}
+
+.fc .fc-toolbar-title {
+    @apply !text-lg;
+}
+
+.fc .fc-daygrid-day-events,
+.fc .fc-daygrid-day-bottom {
+    @apply hidden;
+}
+
+.fc .fc-daygrid-day {
+    @apply hover:bg-gray-100 cursor-pointer;
+}
+
+.fc .fc-daygrid-day-top {
+    @apply relative min-h-full aspect-square flex items-center justify-center;
+}
+
+.fc .fc-col-header-cell {
+    @apply bg-[var(--cassiopeia-color-primary)] text-white;
+}
+
+.fc .fc-col-header-cell .fc-scrollgrid-sync-inner {
+    @apply aspect-square flex items-center justify-center;
 }
