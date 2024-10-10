@@ -4,7 +4,7 @@
         <field name="search"
                type="text"
                label="COM_ROOMBOOKING_FILTER_SEARCH_LABEL"
-               description="COM_ROOMBOOKING_FILTER_SEARCH_DESC"
+               description="COM_ROOMBOOKING_BOOKINGS_FILTER_SEARCH_TITLE_DESC"
                hint="JSEARCH_FILTER" />
 
         <field name="published"
