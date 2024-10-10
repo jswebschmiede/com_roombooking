@@ -8,6 +8,7 @@ const chalk = require('chalk');
 const logSymbols = require('log-symbols');
 const fs = require('fs');
 const rimraf = require('rimraf');
+const { type } = require('os');
 
 let lastPercentage = 0;
 
@@ -168,6 +169,10 @@ module.exports = (env, argv) => {
                     test: /\.css$/,
                     use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
                 },
+                {
+                    test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                    type: 'asset/inline',
+                },
             ],
         },
         plugins: [
@@ -202,8 +207,18 @@ module.exports = (env, argv) => {
             minimizer: [
                 // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`)
                 `...`,
-                new CssMinimizerPlugin(),
+                new CssMinimizerPlugin({
+                    minimizerOptions: {
+                        preset: [
+                            'default',
+                            {
+                                discardComments: { removeAll: true },
+                            },
+                        ],
+                    },
+                }),
             ],
+            minimize: true,
         },
         stats: 'errors-only', // Shows only errors in the console output
     };
