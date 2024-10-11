@@ -123,9 +123,31 @@ class HtmlView extends BaseHtmlView
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
+		$this->translateRecurrenceTypes();
 		$this->addToolbar();
 
 		parent::display($tpl);
+	}
+
+	/**
+	 * Translate recurrence types in items
+	 *
+	 * @return void
+	 */
+	protected function translateRecurrenceTypes(): void
+	{
+		$translations = [
+			'weekly' => Text::_('COM_ROOMBOOKING_WEEKLY'),
+			'biweekly' => Text::_('COM_ROOMBOOKING_BIWEEKLY'),
+			'monthly' => Text::_('COM_ROOMBOOKING_MONTHLY'),
+			'none' => Text::_('COM_ROOMBOOKING_NONE')
+		];
+
+		foreach ($this->items as &$item) {
+			if (isset($item->recurrence_type) && array_key_exists($item->recurrence_type, $translations)) {
+				$item->recurrence_type = $translations[$item->recurrence_type];
+			}
+		}
 	}
 
 	/**
