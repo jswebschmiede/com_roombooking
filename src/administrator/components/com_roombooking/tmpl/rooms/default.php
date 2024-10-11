@@ -79,15 +79,16 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 									<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
 								</th>
 
-								<th scope="col" class="w-20">
+								<th scope="col" class="w-15">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.name', $listDirn, $listOrder); ?>
 								</th>
 
 								<th class="w-5">
-									<?php echo HTMLHelper::_('searchtools.sort', 'COM_ROOMBOOKING_HEADING_BACKEND_LIST_ROOMS_CAPACITY', 'a.capacity', $listDirn, $listOrder); ?>
+									<?php echo HTMLHelper::_('searchtools.sort', 'COM_ROOMBOOKING_HEADING_BACKEND_LIST_ROOMS_BOOKINGS', 'bookings', $listDirn, $listOrder); ?>
 								</th>
-								<th class="w-10">
-									<?php echo HTMLHelper::_('searchtools.sort', 'COM_ROOMBOOKING_HEADING_BACKEND_LIST_ROOMS_IMAGE', 'a.image', $listDirn, $listOrder); ?>
+
+								<th class="w-5">
+									<?php echo HTMLHelper::_('searchtools.sort', 'COM_ROOMBOOKING_HEADING_BACKEND_LIST_ROOMS_CAPACITY', 'a.capacity', $listDirn, $listOrder); ?>
 								</th>
 
 								<th scope="col" class="w-10">
@@ -165,12 +166,11 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 									</th>
 
 									<td>
-										<?php echo $item->capacity; ?>
+										<?php echo $item->bookings; ?>
 									</td>
+
 									<td>
-										<?php if (!empty($item->image)): ?>
-											<img width="100" src="<?php echo JURI::root() . $item->image; ?>" class="list-media" />
-										<?php endif; ?>
+										<?php echo $item->capacity; ?>
 									</td>
 
 									<td class="created small">

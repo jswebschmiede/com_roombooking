@@ -103,11 +103,14 @@ class RoomsModel extends ListModel
 					$db->quoteName('l.title', 'language_title'),
 					$db->quoteName('l.image', 'language_image'),
 					$db->quoteName('u.name', 'author'),
+					'COUNT(' . $db->quoteName('b.id') . ') AS bookings'
 				]
 			)
 			->from($db->quoteName('#__roombooking_rooms', 'a'))
 			->join('LEFT', $db->quoteName('#__languages', 'l'), $db->quoteName('l.lang_code') . ' = ' . $db->quoteName('a.language'))
-			->join('LEFT', $db->quoteName('#__users', 'u'), $db->quoteName('u.id') . ' = ' . $db->quoteName('a.created_by'));
+			->join('LEFT', $db->quoteName('#__users', 'u'), $db->quoteName('u.id') . ' = ' . $db->quoteName('a.created_by'))
+			->join('LEFT', $db->quoteName('#__roombooking_bookings', 'b'), $db->quoteName('b.room_id') . ' = ' . $db->quoteName('a.id'))
+			->group($db->quoteName('a.id'));
 
 		// Filter by published state
 		$published = (string) $this->getState('filter.published');
