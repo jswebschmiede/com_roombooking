@@ -3,6 +3,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import deLocale from '@fullcalendar/core/locales/de';
 import interactionPlugin from '@fullcalendar/interaction';
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
+import './validator-rules.js';
+import './calc-total-amount.js';
 
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../css/global.css';
@@ -49,9 +51,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (isDateSelectable(info.date) && !isDateBooked(info.date)) {
                     calendar.unselect(); // Clear any existing selection
                     calendar.select(info.date); // Select only the clicked date
-                    let inputDate = document.getElementById('booking-date');
+                    let inputDate = document.getElementById('jform_booking_date');
                     if (inputDate) {
-                        inputDate.value = info.dateStr;
+                        let formattedDate = info.date.toLocaleDateString('de-DE', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                        });
+                        inputDate.value = formattedDate;
                     }
                 }
             },
