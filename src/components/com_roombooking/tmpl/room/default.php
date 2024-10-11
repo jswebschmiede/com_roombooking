@@ -138,8 +138,7 @@ $doc->addScriptOptions('com_roombooking', [
 
 						<div class="row mt-3">
 							<div class="col-12 text-end">
-								<button type="submit" class="btn btn-primary"
-									onclick="Joomla.submitbutton('room.submit')">
+								<button type="submit" class="btn btn-primary">
 									Kostenpflichtig buchen
 								</button>
 							</div>
@@ -148,7 +147,7 @@ $doc->addScriptOptions('com_roombooking', [
 
 					<?php echo $this->form->renderField('room_id'); ?>
 
-					<input type="hidden" name="task" />
+					<input type="hidden" name="task" value="room.submit" />
 					<?php echo HtmlHelper::_('form.token'); ?>
 				</form>
 			</div>
