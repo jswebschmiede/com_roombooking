@@ -79,7 +79,7 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 									<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
 								</th>
 
-								<th scope="col" class="w-15">
+								<th scope="col" class="w-20">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.name', $listDirn, $listOrder); ?>
 								</th>
 
