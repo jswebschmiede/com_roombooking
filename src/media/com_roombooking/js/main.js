@@ -3,8 +3,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import deLocale from '@fullcalendar/core/locales/de';
 import interactionPlugin from '@fullcalendar/interaction';
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
+import calcTotalAmount from './calc-total-amount.js';
 import './validator-rules.js';
-import './calc-total-amount.js';
 
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../css/global.css';
@@ -89,4 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return date >= today && date <= endDateObj;
         }
     }
+
+    // Calculate total amount
+    calcTotalAmount(options);
 });
