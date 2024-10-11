@@ -1,8 +1,6 @@
-window.onload = (event) => {
-    const options = Joomla.getOptions('com_roombooking');
+export default function calcTotalAmount(options) {
+    // Calculate total amount
     const price = options.price;
-
-    // TODO: get vat rate from options in component
     const vatRate = options.vatRate || 0.19;
     const numericPrice = parseFloat(price.replace(',', '.'));
     const totalAmount = numericPrice * (1 + vatRate);
@@ -12,4 +10,4 @@ window.onload = (event) => {
     if (totalAmountInput) {
         totalAmountInput.value = totalAmount.toFixed(2);
     }
-};
+}
