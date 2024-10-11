@@ -196,6 +196,45 @@ class RoomModel extends FormModel
 		return parent::getFormFactory();
 	}
 
+	/**
+	 * Get the booking dates as JSON
+	 * @return string
+	 */
+	public function getBookingDatesJson(): string
+	{
+		$roomId = $this->getState('room.id');
+
+		try {
+			$db = $this->getDatabase();
+			$query = $db->getQuery(true);
+
+			$query
+				->select($db->quoteName('b.booking_date', 'start'))
+				->from($db->quoteName('#__roombooking_bookings', 'b'))
+				->where($db->quoteName('b.room_id') . ' = :room_id')
+				->andWhere($db->quoteName('b.state') . ' = 1')
+				->bind(':room_id', $roomId, ParameterType::INTEGER);
+
+			$db->setQuery($query);
+			$result = $db->loadAssocList();
+
+			foreach ($result as &$item) {
+				$item['start'] = new Date($item['start']);
+				$item['start'] = $item['start']->format('Y-m-d');
+			}
+
+			return json_encode($result);
+
+		} catch (\Exception $e) {
+			throw new \Exception("Error in getBookingDates method: " . $e->getMessage(), 500);
+		}
+	}
+
+	/**
+	 * Save the booking form data
+	 * @param array $data
+	 * @return bool
+	 */
 	public function save(array $data): bool
 	{
 		try {

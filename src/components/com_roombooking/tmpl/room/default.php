@@ -29,24 +29,11 @@ $wa->useStyle('com_roombooking.style');
 $wa->useScript('form.validate');
 HTMLHelper::_('bootstrap.tooltip', '.hasTooltip');
 
-// Demo booking data
-$bookedDates = json_encode([
-	[
-		'start' => date('Y-m-d', strtotime('+3 days')),
-	],
-	[
-		'start' => date('Y-m-d', strtotime('+10 days')),
-	],
-	[
-		'start' => date('Y-m-d', strtotime('+20 days')),
-	]
-]);
-
 // Calculate the end date (3 years from today)
 $endDate = date('Y-m-d', strtotime('+3 years'));
 
 $doc->addScriptOptions('com_roombooking', [
-	'bookedDates' => $bookedDates,
+	'bookedDates' => $this->bookingDatesJson,
 	'endDate' => $endDate,
 	'price' => RoombookingHelper::formatPrice($this->item->price, false)
 ]);

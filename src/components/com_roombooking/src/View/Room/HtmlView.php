@@ -18,7 +18,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\Component\Roombooking\Site\Helper\RoombookingHelper;
 
 /**
  * HTML Room View class for the Roombooking component
@@ -27,6 +26,7 @@ use Joomla\Component\Roombooking\Site\Helper\RoombookingHelper;
  * @property-read Registry $state
  * @property-read Registry $params
  * @property-read \JObject $item 
+ * @property-read string $bookingDatesJson
  * 
  * @since  1.0.0
  */
@@ -62,6 +62,11 @@ class HtmlView extends BaseHtmlView
 	protected $form;
 
 	/**
+	 * @var string
+	 */
+	protected $bookingDatesJson;
+
+	/**
 	 * Execute and display a template script.
 	 *
 	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
@@ -74,6 +79,7 @@ class HtmlView extends BaseHtmlView
 		$this->item = $this->get('Item');
 		$this->state = $this->get('State');
 		$this->params = $app->getParams('com_roombooking');
+		$this->bookingDatesJson = $this->get('BookingDatesJson');
 
 		/** @var Form $this->form */
 		$this->form = $this->getModel()->getForm();
