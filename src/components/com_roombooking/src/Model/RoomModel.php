@@ -11,9 +11,12 @@
 namespace Joomla\Component\Roombooking\Site\Model;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Date\Date;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\ParameterType;
-use Joomla\CMS\MVC\Model\ItemModel;
+use Joomla\CMS\MVC\Model\FormModel;
+use Joomla\CMS\Form\FormFactoryInterface;
 
 defined('_JEXEC') or die;
 
@@ -22,7 +25,7 @@ defined('_JEXEC') or die;
  *
  * @since  1.0.0
  */
-class RoomModel extends ItemModel
+class RoomModel extends FormModel
 {
 	/**
 	 * Model context string.
@@ -139,5 +142,135 @@ class RoomModel extends ItemModel
 		}
 
 		return $this->_item[$pk];
+	}
+
+	/**
+	 * Summary of getForm
+	 * @param array $data
+	 * @param bool $loadData
+	 * @return Form
+	 * @throws \Exception
+	 */
+	public function getForm($data = array(), $loadData = true): Form
+	{
+		$form = $this->loadForm(
+			'com_roombooking.booking',   // just a unique name to identify the form
+			'booking_form',              // the filename of the XML form definition
+			// Joomla will look in the site/forms folder for this file
+			array(
+				'control' => 'jform',    // the name of the array for the POST parameters
+				'load_data' => $loadData // if set to true, then there will be a callback to 
+				// loadFormData to supply the data
+			)
+		);
+
+		if (empty($form)) {
+			$errors = $this->getErrors();
+			throw new \Exception(implode("\n", $errors), 500);
+		}
+
+		return $form;
+	}
+
+	/**
+	 * Summary of loadFormData
+	 * @return mixed
+	 */
+	protected function loadFormData(): mixed
+	{
+		// Check the session for previously entered form data.
+		$data = Factory::getApplication()->getUserState(
+			'com_roombooking.booking',  // a unique name to identify the data in the session
+			array("email" => ".@.") // prefill data if no data found in session
+		);
+
+		return $data;
+	}
+
+	/**
+	 * Summary of getFormFactory
+	 * @return FormFactoryInterface
+	 */
+	public function getFormFactory(): FormFactoryInterface
+	{
+		return parent::getFormFactory();
+	}
+
+	public function save(array $data): bool
+	{
+		try {
+			$db = $this->getDatabase();
+			$query = $db->getQuery(true);
+
+			$columns = [
+				'room_id',
+				'booking_date',
+				'total_amount',
+				'customer_name',
+				'customer_address',
+				'customer_email',
+				'customer_phone',
+				'recurring',
+				'recurrence_type',
+				'recurrence_end_date',
+				'name',
+				'created',
+			];
+
+			$query
+				->insert($db->quoteName('#__roombooking_bookings'))
+				->columns($db->quoteName($columns))
+				->values('
+					:room_id, 
+					:booking_date, 
+					:total_amount, 
+					:customer_name, 
+					:customer_address, 
+					:customer_email, 
+					:customer_phone, 
+					:recurring, 
+					:recurrence_type, 
+					:recurrence_end_date, 
+					:name, 
+					:created
+				');
+
+			$now = Factory::getDate()->toSql();
+			$name = "Booking from {$data['customer_name']}";
+
+			// Konvertiere das Buchungsdatum in das richtige Format
+			$bookingDate = new Date($data['booking_date']);
+			$formattedBookingDate = $bookingDate->format('Y-m-d');
+
+			// Konvertiere das Enddatum der Wiederholung, falls vorhanden
+			if (!empty($data['recurrence_end_date'])) {
+				$recurrenceEndDate = new Date($data['recurrence_end_date']);
+				$formattedRecurrenceEndDate = $recurrenceEndDate->format('Y-m-d');
+			} else {
+				$formattedRecurrenceEndDate = null;
+			}
+
+			$query
+				->bind(':room_id', $data['room_id'], ParameterType::INTEGER)
+				->bind(':booking_date', $formattedBookingDate)
+				->bind(':total_amount', $data['total_amount'], ParameterType::INTEGER)
+				->bind(':customer_name', $data['customer_name'])
+				->bind(':customer_address', $data['customer_address'])
+				->bind(':customer_email', $data['customer_email'])
+				->bind(':customer_phone', $data['customer_phone'])
+				->bind(':recurring', $data['recurring'], ParameterType::INTEGER)
+				->bind(':recurrence_type', $data['recurrence_type'])
+				->bind(':recurrence_end_date', $formattedRecurrenceEndDate)
+				->bind(':name', $name)
+				->bind(':created', $now);
+
+			$db->setQuery($query);
+			$result = $db->execute();
+
+			return (bool) $result;
+		} catch (\Exception $e) {
+			Factory::getApplication()->enqueueMessage("Error in save method: " . $e->getMessage(), 'error');
+			return false;
+		}
 	}
 }

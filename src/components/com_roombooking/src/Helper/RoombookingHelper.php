@@ -29,9 +29,10 @@ abstract class RoombookingHelper
      * Format the price.
      *
      * @param float $price The price to format.
+     * @param bool  $includeCurrencySymbol Whether to include the currency symbol. Defaults to true.
      * @return string The formatted price.
      */
-    public static function formatPrice(float $price): string
+    public static function formatPrice(float $price, bool $includeCurrencySymbol = true): string
     {
         $lang = Factory::getApplication()->getLanguage();
         $locale = $lang->getTag();
@@ -39,6 +40,10 @@ abstract class RoombookingHelper
         // Convert locale format from "de-DE" to "de_DE"
         $formatterLocale = str_replace('-', '_', $locale) . '@currency=EUR';
         $formatter = new NumberFormatter($formatterLocale, NumberFormatter::CURRENCY);
+
+        if (!$includeCurrencySymbol) {
+            $formatter->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
+        }
 
         return $formatter->formatCurrency($price, 'EUR');
     }

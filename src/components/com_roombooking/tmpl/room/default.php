@@ -1,4 +1,5 @@
 <?php
+use Joomla\CMS\Factory;
 
 /**
  * @package     com_roombooking
@@ -10,10 +11,11 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\Component\Roombooking\Site\Helper\RouteHelper;
+use Joomla\Component\Roombooking\Site\Helper\RoombookingHelper;
 
 /** @var \Joomla\Component\Roombooking\Site\View\Room\HtmlView $this */
 
@@ -24,6 +26,7 @@ $doc = Factory::getApplication()->getDocument();
 $wa = $doc->getWebAssetManager();
 $wa->useScript('com_roombooking.main');
 $wa->useStyle('com_roombooking.style');
+$wa->useScript('form.validate');
 HTMLHelper::_('bootstrap.tooltip', '.hasTooltip');
 
 // Demo booking data
@@ -44,8 +47,10 @@ $endDate = date('Y-m-d', strtotime('+3 years'));
 
 $doc->addScriptOptions('com_roombooking', [
 	'bookedDates' => $bookedDates,
-	'endDate' => $endDate
+	'endDate' => $endDate,
+	'price' => RoombookingHelper::formatPrice($this->item->price, false)
 ]);
+
 ?>
 
 <?php if ($this->params->get('show_page_heading')): ?>
@@ -84,7 +89,7 @@ $doc->addScriptOptions('com_roombooking', [
 							<span class="badge bg-primary hasTooltip larger-badge"
 								title="<?php echo Text::_('COM_ROOMBOOKING_ROOM_PRICE'); ?>">
 								<i class="fas fa-money-bill-wave me-1"></i>
-								<?php echo $this->item->price; ?>
+								<?php echo RoombookingHelper::formatPrice($this->item->price); ?>
 								<?php echo Text::_('COM_ROOMBOOKING_CURRENCY_PER_DAY'); ?>
 							</span>
 						</div>
@@ -102,9 +107,10 @@ $doc->addScriptOptions('com_roombooking', [
 
 		<div class="row mt-3">
 			<div class="col-12">
-				<form
-					action="<?php echo Route::_('index.php?option=com_roombooking&task=room.booking&id=' . $this->item->id); ?>"
-					method="post" class="room-booking-form card">
+				<form action="<?php echo Route::_(RouteHelper::getRoomRoute($this->item->id, $this->item->alias)); ?>"
+					method="post" class="bookingForm form-validate card" id="bookingForm" enctype="multipart/form-data"
+					name="bookingForm">
+
 					<div class="card-header ">
 						<h3 class="card-title">Raum buchen</h3>
 					</div>
@@ -118,32 +124,44 @@ $doc->addScriptOptions('com_roombooking', [
 										Bitte wählen Sie ein Datum aus, um den gewünschten Raum zu buchen. Rot markierte
 										Tage sind bereits gebucht.
 									</p>
+
+									<div class="mt-4">
+										<?php echo $this->form->renderField('total_amount'); ?>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-7">
-								<div class="mt-4">
-									<div class="recurring-booking mt-3">
-										<div class="form-check">
-											<input type="checkbox" class="form-check-input" id="recurring-booking"
-												name="recurring-booking">
-											<label for="recurring-booking" class="form-check-label">
-												Wiederkehrende Buchung
-											</label>
-										</div>
-									</div>
+								<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'details', 'recall' => true, 'breakpoint' => 768]); ?>
 
-								</div>
+								<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'booking_details', Text::_('COM_ROOMBOOKING_BOOKING_DETAILS')); ?>
+								<?php echo $this->form->renderField('booking_date'); ?>
+								<?php echo $this->form->renderField('recurring'); ?>
+								<?php echo $this->form->renderField('recurrence_type'); ?>
+								<?php echo $this->form->renderField('recurrence_end_date'); ?>
+								<?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+								<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'customer_info', Text::_('COM_ROOMBOOKING_CUSTOMER_INFO')); ?>
+								<?php echo $this->form->renderFieldset('customer_info'); ?>
+								<?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+								<?php echo HTMLHelper::_('uitab.endTabSet'); ?>
 							</div>
 						</div>
 
-						<div class="row">
+						<div class="row mt-3">
 							<div class="col-12 text-end">
-								<button type="submit" class="btn btn-primary">Kostenpflichtig buchen</button>
+								<button type="submit" class="btn btn-primary"
+									onclick="Joomla.submitbutton('room.submit')">
+									Kostenpflichtig buchen
+								</button>
 							</div>
 						</div>
 					</div>
-					<input type="hidden" id="booking-date" name="booking_date">
-					<?php echo HTMLHelper::_('form.token'); ?>
+
+					<?php echo $this->form->renderField('room_id'); ?>
+
+					<input type="hidden" name="task" />
+					<?php echo HtmlHelper::_('form.token'); ?>
 				</form>
 			</div>
 		</div>

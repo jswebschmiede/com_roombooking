@@ -12,8 +12,10 @@ namespace Joomla\Component\Roombooking\Site\View\Room;
 
 defined('_JEXEC') or die;
 
-use NumberFormatter;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\Component\Roombooking\Site\Helper\RoombookingHelper;
@@ -21,6 +23,11 @@ use Joomla\Component\Roombooking\Site\Helper\RoombookingHelper;
 /**
  * HTML Room View class for the Roombooking component
  *
+ * @property-read Form $form
+ * @property-read Registry $state
+ * @property-read Registry $params
+ * @property-read \JObject $item 
+ * 
  * @since  1.0.0
  */
 class HtmlView extends BaseHtmlView
@@ -49,6 +56,10 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected $params;
 
+	/**
+	 * @var \Joomla\CMS\Form\Form
+	 */
+	protected $form;
 
 	/**
 	 * Execute and display a template script.
@@ -64,6 +75,16 @@ class HtmlView extends BaseHtmlView
 		$this->state = $this->get('State');
 		$this->params = $app->getParams('com_roombooking');
 
+		/** @var Form $this->form */
+		$this->form = $this->getModel()->getForm();
+
+		// Set the validation texts for the recurrence end date and booking date fields
+		$this->form->setFieldAttribute('recurrence_end_date', 'data-validation-text', Text::_('COM_ROOMBOOKING_BOOKING_RECURRENCE_END_DATE_ERROR'));
+
+		$this->form->setFieldAttribute('booking_date', 'data-validation-text', Text::_('COM_ROOMBOOKING_BOOKING_DATE_ERROR'));
+
+		$this->form->setValue('room_id', null, $this->item->id);
+
 		// Check for errors.
 		if (\count($errors = $this->get('Errors'))) {
 			throw new GenericDataException(implode("\n", $errors), 500);
@@ -74,7 +95,6 @@ class HtmlView extends BaseHtmlView
 
 		// Add router helpers.
 		$item->slug = $item->alias ? ($item->id . ':' . $item->alias) : $item->id;
-		$item->price = RoombookingHelper::formatPrice($item->price);
 
 		parent::display($tpl);
 	}
