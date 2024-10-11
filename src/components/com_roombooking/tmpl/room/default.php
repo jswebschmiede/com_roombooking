@@ -35,7 +35,8 @@ $endDate = date('Y-m-d', strtotime('+3 years'));
 $doc->addScriptOptions('com_roombooking', [
 	'bookedDates' => $this->bookingDatesJson,
 	'endDate' => $endDate,
-	'price' => RoombookingHelper::formatPrice($this->item->price, false)
+	'price' => RoombookingHelper::formatPrice($this->item->price, false),
+	'vatRate' => $this->vatRate,
 ]);
 
 ?>

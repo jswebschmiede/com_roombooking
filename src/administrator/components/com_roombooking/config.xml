@@ -29,6 +29,13 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
+
+		<field name="vat_rate"
+			   type="number"
+			   label="COM_ROOMBOOKING_FIELD_VAT_RATE_LABEL"
+			   description="COM_ROOMBOOKING_FIELD_VAT_RATE_DESC"
+			   filter="integer"
+			   default="19" />
 	</fieldset>
 
 	<fieldset name="permissions"
