@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `#__roombooking_rooms` (
 
 CREATE TABLE IF NOT EXISTS `#__roombooking_bookings` (
 	`id` int(10) NOT NULL AUTO_INCREMENT,
-	`ordering` int(10) NOT NULL,
+	`ordering` int(10) NOT NULL DEFAULT 0,
 	`created` datetime NOT NULL,
 	`room_id` int(10) NOT NULL,
 	`state` INT(10) NOT NULL DEFAULT 1,
@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS `#__roombooking_bookings` (
 	`customer_address` text NOT NULL,
 	`customer_phone` varchar(20) NOT NULL,
 	`customer_email` varchar(255) NOT NULL,
+	`privacy_accepted` tinyint(1) NOT NULL DEFAULT '0',
 	INDEX `idx_state` (`state`),
 	PRIMARY KEY (`id`),
 	KEY `idx_room_id` (`room_id`)
