@@ -3,8 +3,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import deLocale from '@fullcalendar/core/locales/de';
 import interactionPlugin from '@fullcalendar/interaction';
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
-import calcTotalAmount from './calc-total-amount.js';
-import './validator-rules.js';
+import calcTotalAmount from './calc-total-amount';
+import { initValidatorRules } from './validator-rules';
 
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../css/global.css';
@@ -93,3 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Calculate total amount
     calcTotalAmount(options);
 });
+
+window.onload = function () {
+    initValidatorRules();
+};
