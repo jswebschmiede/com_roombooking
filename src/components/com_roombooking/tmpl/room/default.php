@@ -96,7 +96,7 @@ $doc->addScriptOptions('com_roombooking', [
 		<div class="row mt-3">
 			<div class="col-12">
 				<form action="<?php echo Route::_(RouteHelper::getRoomRoute($this->item->id, $this->item->alias)); ?>"
-					method="post" class="bookingForm form-validate card" id="bookingForm" enctype="multipart/form-data"
+					method="post" class="bookingForm form-validate card" id="adminForm" enctype="multipart/form-data"
 					name="bookingForm">
 
 					<div class="card-header ">
@@ -104,7 +104,7 @@ $doc->addScriptOptions('com_roombooking', [
 					</div>
 
 					<div class="card-body">
-						<div class="row gx-5">
+						<div class="row gx-4">
 							<div class="col-md-5">
 								<div class="room-sidebar">
 									<div id="booking-calendar"></div>
@@ -138,7 +138,8 @@ $doc->addScriptOptions('com_roombooking', [
 
 						<div class="row mt-3">
 							<div class="col-12 text-end">
-								<button type="submit" class="btn btn-primary">
+								<button type="submit" class="btn btn-primary" id="submitButton"
+									onclick="Joomla.submitbutton('room.submit'); return false;">
 									Kostenpflichtig buchen
 								</button>
 							</div>
