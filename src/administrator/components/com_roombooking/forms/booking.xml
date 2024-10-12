@@ -57,9 +57,7 @@
               <field name="total_amount"
                      type="number"
                      label="COM_ROOMBOOKING_BOOKING_TOTAL_AMOUNT_LBL"
-                     default="0.00"
-                     min="0"
-                     step="1.0"
+                     default="0.0000"
                      filter="float" />
 
               <field name="payment_status"
@@ -131,5 +129,14 @@
                      default=""
                      filter="email"
                      required="true" />
+
+              <field name="privacy_accepted"
+                     type="radio"
+                     label="COM_ROOMBOOKING_BOOKING_PRIVACY_ACCEPTED_LBL"
+                     default="0"
+                     class="btn-group btn-group-yesno">
+                     <option value="1">JYES</option>
+                     <option value="0">JNO</option>
+              </field>
        </fieldset>
 </form>
