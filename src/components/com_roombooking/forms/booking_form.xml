@@ -1,91 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form name="booking">
-    <fieldset name="booking_details">
-        <field name="booking_date"
-               type="text"
-               label="COM_ROOMBOOKING_BOOKING_DATE_LBL"
-               default=""
-               readonly="true"
-               data-validation-text="COM_ROOMBOOKING_BOOKING_DATE_ERROR"
-               required="true" />
+       <fieldset name="booking_details">
+              <field name="booking_date"
+                     type="text"
+                     label="COM_ROOMBOOKING_BOOKING_DATE_LBL"
+                     default=""
+                     readonly="true"
+                     data-validation-text="COM_ROOMBOOKING_BOOKING_DATE_ERROR"
+                     required="true" />
 
-        <field name="recurring"
-               type="radio"
-               label="COM_ROOMBOOKING_BOOKING_RECURRING_LBL"
-               default="0"
-               class="btn-group btn-group-yesno">
-            <option value="1">JYES</option>
-            <option value="0">JNO</option>
-        </field>
+              <field name="recurring"
+                     type="radio"
+                     label="COM_ROOMBOOKING_BOOKING_RECURRING_LBL"
+                     default="0"
+                     class="btn-group btn-group-yesno">
+                     <option value="1">JYES</option>
+                     <option value="0">JNO</option>
+              </field>
 
-        <field name="recurrence_type"
-               type="list"
-               label="COM_ROOMBOOKING_BOOKING_RECURRENCE_TYPE_LBL"
-               class="form-control validate-validRecurrenceType"
-               showon="recurring:1">
-            <option value="none">COM_ROOMBOOKING_SELECT_RECURRENCE_TYPE</option>
-            <option value="weekly">COM_ROOMBOOKING_WEEKLY</option>
-            <option value="biweekly">COM_ROOMBOOKING_BIWEEKLY</option>
-            <option value="monthly">COM_ROOMBOOKING_MONTHLY</option>
-        </field>
+              <field name="recurrence_type"
+                     type="list"
+                     label="COM_ROOMBOOKING_BOOKING_RECURRENCE_TYPE_LBL"
+                     showon="recurring:1">
+                     <option value="none">COM_ROOMBOOKING_SELECT_RECURRENCE_TYPE</option>
+                     <option value="weekly">COM_ROOMBOOKING_WEEKLY</option>
+                     <option value="biweekly">COM_ROOMBOOKING_BIWEEKLY</option>
+                     <option value="monthly">COM_ROOMBOOKING_MONTHLY</option>
+              </field>
 
-        <field name="recurrence_end_date"
-               type="calendar"
-               label="COM_ROOMBOOKING_BOOKING_RECURRENCE_END_DATE_LBL"
-               showon="recurring:1"
-               showtime="false"
-               filter="user_utc"
-               translateformat="true"
-               minyear="date('Y')"
-               data-validation-text="COM_ROOMBOOKING_BOOKING_RECURRENCE_END_DATE_ERROR" />
+              <field name="recurrence_end_date"
+                     type="calendar"
+                     label="COM_ROOMBOOKING_BOOKING_RECURRENCE_END_DATE_LBL"
+                     showon="recurring:1"
+                     showtime="false"
+                     filter="user_utc"
+                     translateformat="true"
+                     minyear="date('Y')"
+                     data-validation-text="COM_ROOMBOOKING_BOOKING_RECURRENCE_END_DATE_ERROR" />
 
-        <field name="total_amount"
-               type="number"
-               label="COM_ROOMBOOKING_BOOKING_TOTAL_AMOUNT_LBL"
-               description="COM_ROOMBOOKING_BOOKING_TOTAL_AMOUNT_DESC"
-               default="0.00"
-               min="0"
-               readonly="true"
-               filter="float" />
+              <field name="total_amount"
+                     type="number"
+                     label="COM_ROOMBOOKING_BOOKING_TOTAL_AMOUNT_LBL"
+                     description="COM_ROOMBOOKING_BOOKING_TOTAL_AMOUNT_DESC"
+                     default="0.00"
+                     min="0"
+                     readonly="true"
+                     filter="float" />
 
-        <field name="room_id"
-               type="hidden" />
-    </fieldset>
+              <field name="room_id"
+                     type="hidden" />
+       </fieldset>
 
-    <fieldset name="customer_info">
-        <field name="customer_name"
-               type="text"
-               label="COM_ROOMBOOKING_BOOKING_CUSTOMER_NAME_LBL"
-               default=""
-               required="true" />
+       <fieldset name="customer_info">
+              <field name="customer_name"
+                     type="text"
+                     label="COM_ROOMBOOKING_BOOKING_CUSTOMER_NAME_LBL"
+                     default=""
+                     required="true" />
 
-        <field name="customer_address"
-               type="textarea"
-               label="COM_ROOMBOOKING_BOOKING_CUSTOMER_ADDRESS_LBL"
-               rows="3"
-               cols="30"
-               default=""
-               required="true" />
+              <field name="customer_address"
+                     type="textarea"
+                     label="COM_ROOMBOOKING_BOOKING_CUSTOMER_ADDRESS_LBL"
+                     rows="3"
+                     cols="30"
+                     default=""
+                     required="true" />
 
-        <field name="customer_phone"
-               type="telephone"
-               label="COM_ROOMBOOKING_BOOKING_CUSTOMER_PHONE_LBL"
-               default="" />
+              <field name="customer_phone"
+                     type="telephone"
+                     label="COM_ROOMBOOKING_BOOKING_CUSTOMER_PHONE_LBL"
+                     default="" />
 
-        <field name="customer_email"
-               type="email"
-               label="COM_ROOMBOOKING_BOOKING_CUSTOMER_EMAIL_LBL"
-               default=""
-               filter="email"
-               validate="email"
-               required="true" />
+              <field name="customer_email"
+                     type="email"
+                     label="COM_ROOMBOOKING_BOOKING_CUSTOMER_EMAIL_LBL"
+                     default=""
+                     filter="email"
+                     validate="email"
+                     required="true" />
 
-        <field name="privacy_accepted"
-               type="checkbox"
-               label="COM_ROOMBOOKING_PRIVACY_ACCEPTED_LBL"
-               description="COM_ROOMBOOKING_PRIVACY_ACCEPTED_DESC"
-               value="1"
-               class="form-check-input"
-               required="true" />
-    </fieldset>
+              <field name="privacy_accepted"
+                     type="checkbox"
+                     label="COM_ROOMBOOKING_PRIVACY_ACCEPTED_LBL"
+                     description="COM_ROOMBOOKING_PRIVACY_ACCEPTED_DESC"
+                     value="1"
+                     class="form-check-input"
+                     required="true" />
+       </fieldset>
 </form>
