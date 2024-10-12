@@ -254,6 +254,7 @@ class RoomModel extends FormModel
 				'recurrence_end_date',
 				'name',
 				'created',
+				'privacy_accepted'
 			];
 
 			$query
@@ -271,17 +272,16 @@ class RoomModel extends FormModel
 					:recurrence_type, 
 					:recurrence_end_date, 
 					:name, 
-					:created
+					:created,
+					:privacy_accepted
 				');
 
 			$now = Factory::getDate()->toSql();
-			$name = "Booking from {$data['customer_name']}";
-
-			// Konvertiere das Buchungsdatum in das richtige Format
+			$name = Text::sprintf('COM_ROOMBOOKING_BOOKING_FROM', $data['customer_name']);
 			$bookingDate = new Date($data['booking_date']);
 			$formattedBookingDate = $bookingDate->format('Y-m-d');
+			$totalAmount = number_format($data['total_amount'], 4, '.', '');
 
-			// Konvertiere das Enddatum der Wiederholung, falls vorhanden
 			if (!empty($data['recurrence_end_date'])) {
 				$recurrenceEndDate = new Date($data['recurrence_end_date']);
 				$formattedRecurrenceEndDate = $recurrenceEndDate->format('Y-m-d');
@@ -292,7 +292,7 @@ class RoomModel extends FormModel
 			$query
 				->bind(':room_id', $data['room_id'], ParameterType::INTEGER)
 				->bind(':booking_date', $formattedBookingDate)
-				->bind(':total_amount', $data['total_amount'], ParameterType::INTEGER)
+				->bind(':total_amount', $totalAmount)
 				->bind(':customer_name', $data['customer_name'])
 				->bind(':customer_address', $data['customer_address'])
 				->bind(':customer_email', $data['customer_email'])
@@ -300,6 +300,7 @@ class RoomModel extends FormModel
 				->bind(':recurring', $data['recurring'], ParameterType::INTEGER)
 				->bind(':recurrence_type', $data['recurrence_type'])
 				->bind(':recurrence_end_date', $formattedRecurrenceEndDate)
+				->bind(':privacy_accepted', $data['privacy_accepted'], ParameterType::INTEGER)
 				->bind(':name', $name)
 				->bind(':created', $now);
 

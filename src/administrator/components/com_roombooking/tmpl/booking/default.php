@@ -67,6 +67,7 @@ $form = $this->getForm();
 				<?php echo $form->renderField('customer_address'); ?>
 				<?php echo $form->renderField('customer_phone'); ?>
 				<?php echo $form->renderField('customer_email'); ?>
+				<?php echo $form->renderField('privacy_accepted'); ?>
 			</div>
 		</div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
