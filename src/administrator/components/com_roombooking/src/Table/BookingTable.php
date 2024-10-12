@@ -95,6 +95,11 @@ class BookingTable extends Table
 	 */
 	public function store($updateNulls = true): bool
 	{
+		// Ensure recurrence_end_date is properly handled
+		if (empty($this->recurrence_end_date)) {
+			$this->recurrence_end_date = null;
+		}
+
 		// Store the new row
 		$result = parent::store($updateNulls);
 
