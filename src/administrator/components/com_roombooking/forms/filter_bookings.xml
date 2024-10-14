@@ -58,14 +58,6 @@
                 COM_ROOMBOOKING_TITLE_ASC</option>
             <option value="a.title DESC">
                 COM_ROOMBOOKING_TITLE_DESC</option>
-            <option value="a.booking_date ASC">
-                COM_ROOMBOOKING_BOOKING_DATE_ASC</option>
-            <option value="a.booking_date DESC">
-                COM_ROOMBOOKING_BOOKING_DATE_DESC</option>
-            <option value="a.end_date ASC">
-                COM_ROOMBOOKING_END_DATE_ASC</option>
-            <option value="a.end_date DESC">
-                COM_ROOMBOOKING_END_DATE_DESC</option>
             <option value="a.state ASC">JSTATUS_ASC</option>
             <option value="a.state DESC">
                 JSTATUS_DESC</option>

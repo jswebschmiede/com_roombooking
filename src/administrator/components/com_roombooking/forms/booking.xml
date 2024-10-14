@@ -36,14 +36,23 @@
                      default=""
                      required="true" />
 
-              <field name="booking_date"
-                     type="calendar"
-                     label="COM_ROOMBOOKING_BOOKING_DATE_LBL"
-                     showtime="true"
-                     filter="user_utc"
-                     translateformat="true"
-                     required="true"
-                     default="" />
+              <field name="booking_dates"
+                     type="subform"
+                     label="COM_ROOMBOOKING_BOOKING_DATES_LBL"
+                     multiple="true"
+                     min="1"
+                     buttons="add,remove"
+                     groupByFieldset="false">
+                     <form>
+                            <field name="booking_date"
+                                   type="calendar"
+                                   label="COM_ROOMBOOKING_BOOKING_DATE_LBL"
+                                   filter="user_utc"
+                                   translateformat="true"
+                                   required="true"
+                                   default="" />
+                     </form>
+              </field>
 
               <field name="confirmed"
                      type="radio"
@@ -92,7 +101,6 @@
                      type="calendar"
                      label="COM_ROOMBOOKING_BOOKING_RECURRENCE_END_DATE_LBL"
                      showon="recurring:1"
-                     showtime="true"
                      filter="user_utc"
                      translateformat="true"
                      default="" />

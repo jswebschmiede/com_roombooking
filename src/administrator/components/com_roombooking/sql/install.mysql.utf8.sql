@@ -32,7 +32,6 @@ CREATE TABLE IF NOT EXISTS `#__roombooking_bookings` (
 	`room_id` int(10) NOT NULL,
 	`state` INT(10) NOT NULL DEFAULT 1,
 	`name` varchar(255) NOT NULL,
-	`booking_date` datetime NOT NULL,
 	`confirmed` tinyint(1) NOT NULL DEFAULT '0',
 	`payment_status` enum('unpaid', 'paid', 'cancelled') NOT NULL DEFAULT 'unpaid',
 	`total_amount` decimal(19, 4) NOT NULL DEFAULT 0.0000,
@@ -47,6 +46,15 @@ CREATE TABLE IF NOT EXISTS `#__roombooking_bookings` (
 	INDEX `idx_state` (`state`),
 	PRIMARY KEY (`id`),
 	KEY `idx_room_id` (`room_id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `#__roombooking_booking_dates` (
+	`id` int(10) NOT NULL AUTO_INCREMENT,
+	`booking_id` int(10) NOT NULL,
+	`booking_date` datetime NOT NULL,
+	PRIMARY KEY (`id`),
+	KEY `idx_booking_id` (`booking_id`),
+	CONSTRAINT `fk_booking_id` FOREIGN KEY (`booking_id`) REFERENCES `#__roombooking_bookings` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
 
 INSERT INTO
