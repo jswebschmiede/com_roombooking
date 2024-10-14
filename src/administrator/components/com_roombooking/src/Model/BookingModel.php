@@ -9,6 +9,7 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Language\Text;
 use Joomla\String\StringHelper;
+use Joomla\Database\ParameterType;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Form\FormFactoryInterface;
 
@@ -147,8 +148,8 @@ class BookingModel extends AdminModel
 	 */
 	public function save($data): bool
 	{
+		$db = $this->getDatabase();
 		$input = Factory::getApplication()->getInput();
-
 		// Alter the name for save as copy
 		if ($input->get('task') == 'save2copy') {
 			/** @var \Joomla\Component\Roombooking\Administrator\Table\RoomTable $origTable */
@@ -162,7 +163,70 @@ class BookingModel extends AdminModel
 			$data['state'] = 0;
 		}
 
-		return parent::save($data);
+		// Save the main booking data
+		if (!parent::save($data)) {
+			return false;
+		}
+
+		// Get the booking ID
+		$bookingId = (int) $this->getState($this->getName() . '.id');
+
+		// Handle booking dates
+		if (isset($data['booking_dates']) && is_array($data['booking_dates'])) {
+			// Delete existing dates for this booking
+			$query = $db->getQuery(true)
+				->delete($db->quoteName('#__roombooking_booking_dates'))
+				->where($db->quoteName('booking_id') . ' = :bookingId')
+				->bind(':bookingId', $bookingId, ParameterType::INTEGER);
+			$db->setQuery($query)->execute();
+
+			// Insert new dates
+			foreach ($data['booking_dates'] as $dateEntry) {
+				if (!empty($dateEntry['booking_date'])) {
+					$date = $dateEntry['booking_date'];
+					$query = $db->getQuery(true)
+						->insert($db->quoteName('#__roombooking_booking_dates'))
+						->columns($db->quoteName(['booking_id', 'booking_date']))
+						->values(':bookingId, :bookingDate')
+						->bind(':bookingId', $bookingId, ParameterType::INTEGER)
+						->bind(':bookingDate', $date);
+
+					$db->setQuery($query)->execute();
+				}
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Summary of getItem with booking dates
+	 * @param mixed $pk
+	 * @return mixed
+	 */
+	public function getItem($pk = null): mixed
+	{
+		$item = parent::getItem($pk);
+
+		if ($item) {
+			// Load the booking dates
+			$db = $this->getDatabase();
+			$query = $db->getQuery(true)
+				->select($db->quoteName('booking_date'))
+				->from($db->quoteName('#__roombooking_booking_dates'))
+				->where($db->quoteName('booking_id') . ' = :bookingId')
+				->bind(':bookingId', $item->id, ParameterType::INTEGER)
+				->order($db->quoteName('booking_date') . ' ASC');
+
+			$db->setQuery($query);
+			$dates = $db->loadColumn();
+
+			$item->booking_dates = array_map(function ($date) {
+				return ['booking_date' => $date];
+			}, $dates);
+		}
+
+		return $item;
 	}
 
 	/**

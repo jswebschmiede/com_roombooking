@@ -114,7 +114,6 @@ class BookingsModel extends ListModel
 					$db->quoteName('a.id'),
 					$db->quoteName('a.room_id'),
 					$db->quoteName('a.name'),
-					$db->quoteName('a.booking_date'),
 					$db->quoteName('a.recurring'),
 					$db->quoteName('a.recurrence_type'),
 					$db->quoteName('a.recurrence_end_date'),
@@ -124,13 +123,19 @@ class BookingsModel extends ListModel
 					$db->quoteName('a.created'),
 					$db->quoteName('a.ordering'),
 					$db->quoteName('r.name', 'room_name'),
+					'GROUP_CONCAT(' . $db->quoteName('bd.booking_date') . ' ORDER BY ' . $db->quoteName('bd.booking_date') . ' SEPARATOR ", ") AS booking_dates'
 				]
 			)
 		);
+
+
 		$query->from($db->quoteName('#__roombooking_bookings', 'a'));
 
 		// Join with the rooms table to get the room name
 		$query->join('LEFT', $db->quoteName('#__roombooking_rooms', 'r') . ' ON r.id = a.room_id');
+
+		// Join with the booking_dates table to get the booking dates
+		$query->join('LEFT', $db->quoteName('#__roombooking_booking_dates', 'bd') . ' ON bd.booking_id = a.id');
 
 		// Filter by payment status
 		$paymentStatus = $this->getState('filter.payment_status');
@@ -188,6 +193,8 @@ class BookingsModel extends ListModel
 
 		$query->order($ordering);
 
+		$query->group($db->quoteName('a.id'));
+
 		return $query;
 	}
 
@@ -215,7 +222,17 @@ class BookingsModel extends ListModel
 	 */
 	public function getItems(): array
 	{
-		return parent::getItems();
+		$items = parent::getItems();
+
+		foreach ($items as &$item) {
+			if (!empty($item->booking_dates)) {
+				$item->booking_dates = explode(', ', $item->booking_dates);
+			} else {
+				$item->booking_dates = [];
+			}
+		}
+
+		return $items;
 	}
 
 	/**

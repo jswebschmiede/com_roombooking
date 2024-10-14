@@ -82,12 +82,11 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 								<th scope="col" class="w-20">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.name', $listDirn, $listOrder); ?>
 								</th>
-
-								<th class="w-10">
-									<?php echo HTMLHelper::_('searchtools.sort', 'COM_ROOMBOOKING_BOOKING_DATE_LBL', 'a.booking_date', $listDirn, $listOrder); ?>
+								<th class="w-15">
+									<?php echo HTMLHelper::_('searchtools.sort', 'COM_ROOMBOOKING_BOOKING_DATES_LBL', 'a.booking_dates', $listDirn, $listOrder); ?>
 								</th>
 
-								<th class="w-5">
+								<th class="w-2">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_ROOMBOOKING_HEADING_BACKEND_LIST_BOOKINGS_CONFIRMED', 'a.confirmed', $listDirn, $listOrder); ?>
 								</th>
 
@@ -99,7 +98,7 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_ROOMBOOKING_HEADING_BACKEND_LIST_BOOKINGS_RECURRING', 'a.recurring', $listDirn, $listOrder); ?>
 								</th>
 
-								<th scope="col" class="w-10">
+								<th scope="col" class="w-15">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_CREATED_DATE', 'a.created', $listDirn, $listOrder); ?>
 								</th>
 
@@ -172,7 +171,10 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 									</th>
 
 									<td class="small">
-										<?php echo HTMLHelper::_('date', $item->booking_date, Text::_('DATE_FORMAT_LC3')); ?>
+										<?php foreach ($item->booking_dates as $date): ?>
+											<?php echo HTMLHelper::_('date', $date, Text::_('DATE_FORMAT_LC1')); ?>
+											<br>
+										<?php endforeach; ?>
 									</td>
 
 									<td class="text-center d-table-cell">
@@ -190,20 +192,20 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 										<?php echo $item->payment_status; ?>
 									</td>
 
-									<td>
+									<th scope="row" class="has-context">
 										<?php echo $item->recurring ? Text::_('JYES') : Text::_('JNO'); ?>
 										<?php if ($item->recurring): ?>
 											<div class="small">
-												<?php echo Text::_('COM_ROOMBOOKING_BOOKING_RECURRENCE_TYPE_LBL') . ': ' . $this->escape($item->recurrence_type); ?>
+												<?php echo '<span class="bold">' . Text::_('COM_ROOMBOOKING_BOOKING_RECURRENCE_TYPE_LBL') . ': </span>' . $this->escape($item->recurrence_type); ?>
 											</div>
 											<div class="small">
-												<?php echo Text::_('COM_ROOMBOOKING_BOOKING_RECURRENCE_END_DATE_LBL') . ': ' . HTMLHelper::_('date', $item->recurrence_end_date, Text::_('DATE_FORMAT_LC3')); ?>
+												<?php echo Text::_('COM_ROOMBOOKING_BOOKING_RECURRENCE_END_DATE_LBL') . ': <br> ' . HTMLHelper::_('date', $item->recurrence_end_date, Text::_('DATE_FORMAT_LC1')); ?>
 											</div>
 										<?php endif; ?>
-									</td>
+									</th>
 
 									<td class="created small">
-										<?php echo HTMLHelper::_('date', $item->created, Text::_('DATE_FORMAT_LC2')); ?>
+										<?php echo HTMLHelper::_('date', $item->created, Text::_('DATE_FORMAT_LC1')); ?>
 									</td>
 
 									<?php if (Multilanguage::isEnabled()): ?>

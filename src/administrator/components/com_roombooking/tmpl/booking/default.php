@@ -46,7 +46,7 @@ $form = $this->getForm();
 		<div class="row">
 			<div class="col-lg-9">
 				<?php echo $form->renderField('room_id'); ?>
-				<?php echo $form->renderField('booking_date'); ?>
+				<?php echo $form->renderField('booking_dates'); ?>
 				<?php echo $form->renderField('confirmed'); ?>
 				<?php echo $form->renderField('payment_status'); ?>
 				<?php echo $form->renderField('recurring'); ?>
