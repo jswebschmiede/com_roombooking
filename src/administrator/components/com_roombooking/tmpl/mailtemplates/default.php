@@ -79,7 +79,7 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 								</td>
 
 								<td class="article-status text-center">
-									<?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'rooms.', $canChange, 'cb'); ?>
+									<?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'mailtemplates.', $canChange, 'cb'); ?>
 								</td>
 
 								<th scope="row" class="has-context">
