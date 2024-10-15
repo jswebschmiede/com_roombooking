@@ -21,8 +21,6 @@ const progressHandler = (percentage, message) => {
         // Clear console
         process.stdout.write('\x1Bc');
 
-        console.log(''); // Adds a blank line at the beginning
-
         if (percentage === 0) {
             console.log(chalk.blue(`${logSymbols.info} Build starting...`));
         } else if (percentage === 1) {
@@ -36,8 +34,6 @@ const progressHandler = (percentage, message) => {
             );
             console.log(chalk.cyan(`${logSymbols.info} Status: ${message}`));
         }
-
-        console.log(''); // Adds a blank line at the end
 
         lastPercentage = roundedPercentage;
     }
@@ -94,6 +90,10 @@ module.exports = (env, argv) => {
 
     if (!isProduction) {
         copyPatterns.push(
+            {
+                from: 'dist/roombooking.xml',
+                to: path.join(joomlaPath, 'administrator/components/com_roombooking'),
+            },
             {
                 from: 'dist/administrator/components/com_roombooking',
                 to: path.join(joomlaPath, 'administrator/components/com_roombooking'),
@@ -220,6 +220,6 @@ module.exports = (env, argv) => {
             ],
             minimize: true,
         },
-        stats: 'errors-only', // Shows only errors in the console output
+        stats: 'errors-only',
     };
 };
