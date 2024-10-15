@@ -14,6 +14,8 @@ use Joomla\CMS\MVC\Controller\AdminController;
  */
 class BookingsController extends AdminController
 {
+	protected $text_prefix = 'COM_ROOMBOOKING_BOOKINGS';
+
 	/**
 	 * Proxy for getModel
 	 * @since    1.6

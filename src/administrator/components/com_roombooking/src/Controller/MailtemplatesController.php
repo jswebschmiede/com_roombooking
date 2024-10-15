@@ -14,6 +14,8 @@ use Joomla\CMS\MVC\Controller\AdminController;
  */
 class MailtemplatesController extends AdminController
 {
+	protected $text_prefix = 'COM_ROOMBOOKING_MAILTEMPLATES';
+
 	/**
 	 * Proxy for getModel
 	 * @since    1.6
