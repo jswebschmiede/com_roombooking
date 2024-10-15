@@ -61,14 +61,6 @@ class HtmlView extends BaseHtmlView
 	protected $items = [];
 
 	/**
-	 * The pagination object
-	 *
-	 * @var    Pagination
-	 * @since  1.0.0
-	 */
-	protected $pagination;
-
-	/**
 	 * The model state
 	 *
 	 * @var    Registry
@@ -115,8 +107,26 @@ class HtmlView extends BaseHtmlView
 	{
 		$user = $this->getCurrentUser();
 		$toolbar = Toolbar::getInstance();
+		$canDo = ContentHelper::getActions('com_roombooking');
+		ToolbarHelper::title(Text::_('COM_ROOMBOOKING_MANAGER_MAILTEMPLATES'), 'bookmark mailtemplates');
 
-		ToolbarHelper::title(Text::_('COM_ROOMBOOKING_MANAGER_MAILTEMPLATES'), 'bookmark rooms');
+		if ($canDo->get('core.edit.state') || ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))) {
+			/** @var  DropdownButton $dropdown */
+			$dropdown = $toolbar->dropdownButton('status-group', 'JTOOLBAR_CHANGE_STATUS')
+				->toggleSplit(false)
+				->icon('icon-ellipsis-h')
+				->buttonClass('btn btn-action')
+				->listCheck(true);
+
+			$childBar = $dropdown->getChildToolbar();
+
+			if ($canDo->get('core.edit.state')) {
+				if ($this->state->get('filter.published') != 2) {
+					$childBar->publish('mailtemplates.publish')->listCheck(true);
+					$childBar->unpublish('mailtemplates.unpublish')->listCheck(true);
+				}
+			}
+		}
 
 		if ($user->authorise('core.admin', 'com_roombooking') || $user->authorise('core.options', 'com_roombooking')) {
 			$toolbar->preferences('com_roombooking');
