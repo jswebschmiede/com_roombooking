@@ -55,6 +55,10 @@
                   view="bookings">
                 COM_ROOMBOOKING_MENU_BOOKINGS
             </menu>
+            <menu link="option=com_roombooking&amp;view=mailtemplates"
+                  view="mailtemplates">
+                COM_ROOMBOOKING_MENU_EMAILTEMPLATES
+            </menu>
         </submenu>
     </administration>
 
