@@ -24,7 +24,7 @@ use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- * This models supports retrieving lists of boilerplates.
+ * This models supports retrieving lists of rooms.
  *
  * @since  1.6
  */
@@ -38,7 +38,7 @@ class RoomsModel extends ListModel
     public $_context = 'com_roombooking.rooms';
 
     /**
-     * The boilerplate context (allows other extensions to derived from this model).
+     * The room context (allows other extensions to derived from this model).
      *
      * @var     string
      */

@@ -83,10 +83,10 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null): void
 	{
 		$app = Factory::getApplication();
-		$componentParams = ComponentHelper::getParams('com_roombooking');
 
 		$this->item = $this->get('Item');
 		$this->state = $this->get('State');
+		$componentParams = $this->state->get('params');
 		$this->params = $app->getParams('com_roombooking');
 		$this->bookingDatesJson = $this->get('BookingDatesJson');
 		$this->vatRate = $componentParams->get('vat_rate', 19) / 100;

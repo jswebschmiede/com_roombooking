@@ -22,7 +22,7 @@ use Joomla\CMS\Form\FormFactoryInterface;
 defined('_JEXEC') or die;
 
 /**
- * Methods supporting a single boilerplate record.
+ * Methods supporting a single room record.
  *
  * @since  1.0.0
  */

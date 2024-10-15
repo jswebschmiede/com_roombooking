@@ -72,16 +72,16 @@ class RoomController extends BaseController
             if (!$model->save($validData)) {
                 $app->enqueueMessage("Error saving booking to database", 'error');
                 $this->setRedirect($currentUrl);
+            } else {
+                // TODO: send email to admin
+
+
+                // Clear the form data in the session
+                $app->setUserState('com_roombooking.booking', null);
+                $app->enqueueMessage(Text::_(string: 'COM_ROOMBOOKING_BOOKING_SUCCESS'), 'success');
+
+                $this->setRedirect($currentUrl);
             }
-
-            // TODO: send email to admin
-
-
-            // Clear the form data in the session
-            $app->setUserState('com_roombooking.booking', null);
-            $app->enqueueMessage(Text::_('COM_ROOMBOOKING_BOOKING_SUCCESS'), 'success');
-
-            $this->setRedirect($currentUrl);
         }
     }
 }

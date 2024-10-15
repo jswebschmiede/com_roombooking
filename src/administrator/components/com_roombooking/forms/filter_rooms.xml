@@ -3,7 +3,7 @@
     <fields name="filter">
         <field name="search"
                type="text"
-               label="COM_ROOMBOOKING_BOILERPLATES_FILTER_SEARCH_TITLE_LABEL"
+               label="COM_ROOMBOOKING_ROOMS_FILTER_SEARCH_TITLE_LABEL"
                description="COM_ROOMBOOKING_ROOMS_FILTER_SEARCH_TITLE_DESC"
                hint="JSEARCH_FILTER" />
 

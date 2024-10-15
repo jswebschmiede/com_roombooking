@@ -61,7 +61,7 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 				<?php else: ?>
 					<table class="table itemList" id="roomsList">
 						<caption class="visually-hidden">
-							<?php echo Text::_('COM_ROOMBOOKING_BOILERPLATES_TABLE_CAPTION'); ?>,
+							<?php echo Text::_('COM_ROOMBOOKING_ROOMS_TABLE_CAPTION'); ?>,
 							<span id="orderedBy"><?php echo Text::_('JGLOBAL_SORTED_BY'); ?> </span>,
 							<span id="filteredBy"><?php echo Text::_('JGLOBAL_FILTERED_BY'); ?></span>
 						</caption>
