@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+       <fieldset name="details">
+              <field name="id"
+                     type="text"
+                     label="JGLOBAL_FIELD_ID_LABEL"
+                     default="0"
+                     readonly="true"
+                     class="readonly" />
+
+              <field name="template_type"
+                     type="hidden" />
+
+              <field name="name"
+                     type="text"
+                     label="COM_ROOMBOOKING_FIELD_NAME_LABEL"
+                     readonly="true" />
+
+              <field name="state"
+                     type="list"
+                     label="JSTATUS"
+                     class="form-select-color-state"
+                     default="1"
+                     validate="options">
+                     <option value="1">JPUBLISHED</option>
+                     <option value="0">JUNPUBLISHED</option>
+                     <option value="2">JARCHIVED</option>
+                     <option value="-2">JTRASHED</option>
+              </field>
+
+              <field name="language"
+                     type="contentlanguage"
+                     label="JFIELD_LANGUAGE_LABEL">
+                     <option value="*">JALL</option>
+              </field>
+       </fieldset>
+
+       <fieldset name="mailtemplate"
+                 label="COM_ROOMBOOKING_FIELDSET_EMAILTEMPLATE_LABEL">
+              <field name="subject"
+                     type="text"
+                     required="true"
+                     label="COM_ROOMBOOKING_FIELD_SUBJECT_LABEL" />
+              <field name="body"
+                     type="textarea"
+                     rows="12"
+                     cols="30"
+                     default=""
+                     required="true"
+                     filter="safehtml"
+                     label="COM_ROOMBOOKING_FIELD_BODY_LABEL"
+                     description="COM_ROOMBOOKING_FIELD_BODY_DESCRIPTION" />
+              <field name="from_email"
+                     type="text"
+                     required="true"
+                     label="COM_ROOMBOOKING_FIELD_FROM_EMAIL_LABEL" />
+              <field name="to_email"
+                     type="text"
+                     required="true"
+                     label="COM_ROOMBOOKING_FIELD_TO_EMAIL_LABEL" />
+              <field name="cc"
+                     type="text"
+                     label="COM_ROOMBOOKING_FIELD_CC_LABEL" />
+              <field name="bcc"
+                     type="text"
+                     label="COM_ROOMBOOKING_FIELD_BCC_LABEL" />
+       </fieldset>
+</form>

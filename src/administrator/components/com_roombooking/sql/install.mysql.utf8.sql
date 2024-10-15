@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `#__roombooking_bookings` (
 	`ordering` int(10) NOT NULL DEFAULT 0,
 	`created` datetime NOT NULL,
 	`room_id` int(10) NOT NULL,
-	`state` INT(10) NOT NULL DEFAULT 1,
+	`state` tinyint(1) NOT NULL DEFAULT 0,
 	`name` varchar(255) NOT NULL,
 	`confirmed` tinyint(1) NOT NULL DEFAULT '0',
 	`payment_status` enum('unpaid', 'paid', 'cancelled') NOT NULL DEFAULT 'unpaid',
@@ -44,8 +44,8 @@ CREATE TABLE IF NOT EXISTS `#__roombooking_bookings` (
 	`customer_email` varchar(255) NOT NULL,
 	`privacy_accepted` tinyint(1) NOT NULL DEFAULT '0',
 	INDEX `idx_state` (`state`),
-	PRIMARY KEY (`id`),
-	KEY `idx_room_id` (`room_id`)
+	INDEX `idx_room_id` (`room_id`),
+	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__roombooking_booking_dates` (
@@ -53,9 +53,92 @@ CREATE TABLE IF NOT EXISTS `#__roombooking_booking_dates` (
 	`booking_id` int(10) NOT NULL,
 	`booking_date` datetime NOT NULL,
 	PRIMARY KEY (`id`),
-	KEY `idx_booking_id` (`booking_id`),
+	INDEX `idx_booking_id` (`booking_id`),
 	CONSTRAINT `fk_booking_id` FOREIGN KEY (`booking_id`) REFERENCES `#__roombooking_bookings` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `#__roombooking_mail_templates` (
+	`id` int(10) NOT NULL,
+	`name` varchar(255) NOT NULL,
+	`template_type` enum('admin', 'customer') NOT NULL,
+	`subject` varchar(255) NOT NULL DEFAULT '',
+	`body` text NOT NULL,
+	`from_email` varchar(255) NOT NULL DEFAULT '',
+	`to_email` varchar(255) DEFAULT NULL,
+	`cc` varchar(255) NOT NULL DEFAULT '',
+	`bcc` varchar(255) NOT NULL DEFAULT '',
+	`language` char(7) NOT NULL DEFAULT '*',
+	`state` tinyint(1) NOT NULL DEFAULT 1,
+	PRIMARY KEY (`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
+
+-- Insert default templates
+INSERT INTO
+	`#__roombooking_mail_templates` (
+		`id`,
+		`template_type`,
+		`name`,
+		`subject`,
+		`body`,
+		`from_email`,
+		`to_email`,
+		`cc`,
+		`bcc`,
+		`language`
+	)
+VALUES
+	(
+		1,
+		'admin',
+		'Admin Template',
+		'Neue Raumbuchung',
+		'Eine neue Raumbuchung wurde vorgenommen. Hier sind die Details:\n\n{{booking_details}}',
+		'noreply@example.com',
+		'admin@example.com',
+		'',
+		'',
+		'*'
+	),
+	(
+		2,
+		'customer',
+		'Customer Template',
+		'Ihre Raumbuchung: Bestätigung',
+		'Sehr geehrter {{customer_name}},\n\nVielen Dank für Ihre Buchung. Hier sind die Details Ihrer Reservierung:\n\n{{booking_details}}\n\nBei Fragen stehen wir Ihnen gerne zur Verfügung.\n\nMit freundlichen Grßen,\nIhr Raumbuchungsteam',
+		'info@example.com',
+		NULL,
+		'',
+		'',
+		'*'
+	) ON DUPLICATE KEY
+UPDATE
+	`template_type` =
+VALUES
+	(`template_type`),
+	`subject` =
+VALUES
+	(`subject`),
+	`body` =
+VALUES
+	(`name`),
+	`name` =
+VALUES
+	(`body`),
+	`from_email` =
+VALUES
+	(`from_email`),
+	`to_email` =
+VALUES
+	(`to_email`),
+	`cc` =
+VALUES
+	(`cc`),
+	`bcc` =
+VALUES
+	(`bcc`),
+	`language` =
+VALUES
+	(`language`);
 
 INSERT INTO
 	`#__roombooking_rooms` (
