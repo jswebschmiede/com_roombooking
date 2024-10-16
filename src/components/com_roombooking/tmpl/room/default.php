@@ -1,5 +1,4 @@
 <?php
-use Joomla\CMS\Factory;
 
 /**
  * @package     com_roombooking
@@ -11,6 +10,7 @@ use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -139,7 +139,7 @@ $doc->addScriptOptions('com_roombooking', [
 						<div class="row mt-3">
 							<div class="col-12 text-end">
 								<button type="submit" class="btn btn-primary" id="submitButton"
-									onclick="Joomla.submitbutton('room.submit'); return false;">
+									onclick="Joomla.submitbutton('booking.submit'); return false;">
 									Kostenpflichtig buchen
 								</button>
 							</div>
@@ -148,7 +148,7 @@ $doc->addScriptOptions('com_roombooking', [
 
 					<?php echo $this->form->renderField('room_id'); ?>
 
-					<input type="hidden" name="task" value="room.submit" />
+					<input type="hidden" name="task" value="booking.submit" />
 					<?php echo HtmlHelper::_('form.token'); ?>
 				</form>
 			</div>

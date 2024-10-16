@@ -61,8 +61,8 @@ class RoomModel extends FormModel
 
 
 	/**
+	 * Get the room ID from the request
 	 * @return int
-	 * @throws \Exception
 	 */
 	private function getId(): int
 	{
@@ -134,12 +134,12 @@ class RoomModel extends FormModel
 				$data = $db->loadObject();
 
 				if (empty($data)) {
-					throw new \Exception(Text::_('COM_ROOMBOOKING_ERROR_ROOM_NOT_FOUND'), 404);
+					throw new \RuntimeException(Text::_('COM_ROOMBOOKING_ERROR_ROOM_NOT_FOUND'), 404);
 				}
 
 				$this->_item[$pk] = $data;
 
-			} catch (\Exception $e) {
+			} catch (\RuntimeException $e) {
 				if ($e->getCode() == 404) {
 					// Need to go through the error handler to allow Redirect to work.
 					throw $e;
@@ -158,7 +158,7 @@ class RoomModel extends FormModel
 	 * @param array $data
 	 * @param bool $loadData
 	 * @return Form
-	 * @throws \Exception
+	 * @throws \RuntimeException
 	 */
 	public function getForm($data = array(), $loadData = true): Form
 	{
@@ -175,7 +175,7 @@ class RoomModel extends FormModel
 
 		if (empty($form)) {
 			$errors = $this->getErrors();
-			throw new \Exception(implode("\n", $errors), 500);
+			throw new \RuntimeException(implode("\n", $errors), 500);
 		}
 
 		return $form;
@@ -235,192 +235,8 @@ class RoomModel extends FormModel
 
 			return json_encode($result);
 
-		} catch (\Exception $e) {
-			throw new \Exception("Error in getBookingDates method: " . $e->getMessage(), 500);
-		}
-	}
-
-	/**
-	 * Calculate the reccrence dates based of the reccurce type
-	 * @param array $data
-	 * @return array
-	 */
-	private function calculateReccurenceDates(array $data): array
-	{
-		if (!$this->isRecurring($data)) {
-			return [];
-		}
-
-		$recurrenceType = $data['recurrence_type'];
-		$recurrenceEndDate = new \DateTime($data['recurrence_end_date']);
-		$bookingDate = new \DateTime($data['booking_date']);
-
-		$this->_reccurenceDates = [];
-
-		switch ($recurrenceType) {
-			case 'weekly':
-				$interval = new \DateInterval('P1W'); // 1 Woche
-				break;
-			case 'biweekly':
-				$interval = new \DateInterval('P2W'); // 2 Wochen
-				break;
-			case 'monthly':
-				$interval = new \DateInterval('P1M'); // 1 Monat
-				break;
-			default:
-				return $this->_reccurenceDates;
-		}
-
-		$currentDate = clone $bookingDate;
-
-		while ($currentDate <= $recurrenceEndDate) {
-			$this->_reccurenceDates[] = $currentDate->format('Y-m-d');
-			$currentDate->add($interval);
-		}
-
-		return $this->_reccurenceDates;
-	}
-
-	/**
-	 * Check if the booking is recurring
-	 * @param array $data
-	 * @return bool
-	 */
-	private function isRecurring(array $data): bool
-	{
-		return (bool) ($data['recurring'] == 1);
-	}
-
-
-	/**
-	 * Save the booking form data
-	 * @param array $data
-	 * @return bool
-	 */
-	public function save(array $data): bool
-	{
-		$db = $this->getDatabase();
-		$now = Factory::getDate()->toSql();
-		$name = Text::sprintf('COM_ROOMBOOKING_BOOKING_FROM', $data['customer_name']);
-
-		try {
-			// Start transaction
-			$db->transactionStart();
-
-			// Insert into #__roombooking_bookings table
-			$bookingColumns = [
-				'room_id',
-				'total_amount',
-				'customer_name',
-				'customer_address',
-				'customer_email',
-				'customer_phone',
-				'recurring',
-				'recurrence_type',
-				'recurrence_end_date',
-				'name',
-				'created',
-				'privacy_accepted'
-			];
-
-			$bookingQuery = $db->getQuery(true)
-				->insert($db->quoteName('#__roombooking_bookings'))
-				->columns($db->quoteName($bookingColumns))
-				->values('
-					:room_id, 
-					:total_amount, 
-					:customer_name, 
-					:customer_address, 
-					:customer_email, 
-					:customer_phone, 
-					:recurring, 
-					:recurrence_type, 
-					:recurrence_end_date, 
-					:name, 
-					:created,
-					:privacy_accepted
-				');
-
-			// Calculate the total amount
-			$totalAmount = number_format($data['total_amount'], 4, '.', '');
-
-			// Format the recurrence end date
-			if (!empty($data['recurrence_end_date'])) {
-				$recurrenceEndDate = new Date($data['recurrence_end_date']);
-				$formattedRecurrenceEndDate = $recurrenceEndDate->format('Y-m-d');
-			} else {
-				$formattedRecurrenceEndDate = null;
-			}
-
-			// Bind the values to the booking query
-			$bookingQuery
-				->bind(':room_id', $data['room_id'], ParameterType::INTEGER)
-				->bind(':total_amount', $totalAmount)
-				->bind(':customer_name', $data['customer_name'])
-				->bind(':customer_address', $data['customer_address'])
-				->bind(':customer_email', $data['customer_email'])
-				->bind(':customer_phone', $data['customer_phone'])
-				->bind(':recurring', $data['recurring'], ParameterType::INTEGER)
-				->bind(':recurrence_type', $data['recurrence_type'])
-				->bind(':recurrence_end_date', $formattedRecurrenceEndDate)
-				->bind(':privacy_accepted', $data['privacy_accepted'], ParameterType::INTEGER)
-				->bind(':name', $name)
-				->bind(':created', $now);
-
-			$db->setQuery($bookingQuery);
-
-			if (!$db->execute()) {
-				throw new \RuntimeException('Failed to insert booking data');
-			}
-
-			// Get the booking ID
-			$bookingId = $db->insertid();
-
-			// Insert into #__roombooking_booking_dates table
-			$dateQuery = $db->getQuery(true)
-				->insert($db->quoteName('#__roombooking_booking_dates'))
-				->columns($db->quoteName(['booking_id', 'booking_date']));
-
-			if ($data['recurring'] == 1) {
-				$recurrenceDates = $this->calculateReccurenceDates($data);
-
-				foreach ($recurrenceDates as $date) {
-					$dateQuery->values(':booking_id, :booking_date')
-						->bind(':booking_id', $bookingId, ParameterType::INTEGER)
-						->bind(':booking_date', $date);
-
-					$db->setQuery($dateQuery);
-					$db->execute();
-					$dateQuery->clear('values');
-				}
-
-			} else {
-				// save the single booking date
-				$bookingDate = new Date($data['booking_date']);
-				$formattedBookingDate = $bookingDate->format('Y-m-d');
-
-				$dateQuery->values(':booking_id, :booking_date')
-					->bind(':booking_id', $bookingId, ParameterType::INTEGER)
-					->bind(':booking_date', $formattedBookingDate);
-
-				$db->setQuery($dateQuery);
-
-				if (!$db->execute()) {
-					throw new \RuntimeException('Failed to insert booking dates');
-				}
-			}
-
-			// If we've made it this far without exceptions, commit the transaction
-			$db->transactionCommit();
-
-			return true;
-
 		} catch (\RuntimeException $e) {
-			// Rollback the transaction
-			$db->transactionRollback();
-
-			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-			return false;
+			throw new \RuntimeException("Error in getBookingDates method: " . $e->getMessage(), 500);
 		}
 	}
 }
