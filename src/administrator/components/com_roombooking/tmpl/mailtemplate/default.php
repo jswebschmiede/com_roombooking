@@ -49,9 +49,9 @@ $wa->useScript('keepalive')
 				<?php echo $this->form->renderField('from_email'); ?>
 				<?php if ($this->item->template_type == 'admin'): ?>
 					<?php echo $this->form->renderField('to_email'); ?>
+					<?php echo $this->form->renderField('cc'); ?>
+					<?php echo $this->form->renderField('bcc'); ?>
 				<?php endif ?>
-				<?php echo $this->form->renderField('cc'); ?>
-				<?php echo $this->form->renderField('bcc'); ?>
 			</div>
 			<div class="col-lg-3">
 				<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
