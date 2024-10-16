@@ -72,6 +72,17 @@ CREATE TABLE IF NOT EXISTS `#__roombooking_mail_templates` (
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `#__roombooking_tokens` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`booking_id` int(11) NOT NULL,
+	`token` varchar(64) NOT NULL,
+	`type` enum('email_confirmation', 'booking_cancellation') NOT NULL,
+	`created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`expires_at` timestamp NOT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `token` (`token`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
+
 -- Insert default templates
 INSERT INTO
 	`#__roombooking_mail_templates` (
