@@ -1,18 +1,22 @@
-# Simpleboilerplate - Joomla Component
+# Room Booking - Component
 
 ## Description
 
-Simpleboilerplate is a base component for Joomla, serving as a starting point for developing custom components. It provides a pre-configured structure and integrates modern development tools for efficient Joomla extension development.
+Room Booking is a component for booking rooms. It is a simple component that allows you to book rooms.
+
+> [!WARNING]
+> This component has been created for learning purposes.
+> This component is still in development and not all features have been implemented.
+> This component is not yet ready for production use. Use it on your own risk.
 
 ## Features
 
--   Pre-configured Webpack setup for efficient asset management
--   Integration of Tailwind CSS for modern, responsive styling (optional)
--   Automated build processes for development and production
--   Progress display during the build process
--   Automatic creation of ZIP archives for easy installation
--   Automatic copying of files to your Joomla installation
--   No Category support (if needed: look at https://github.com/jswebschmiede/com_boilerplate)
+-   Booking rooms
+-   View bookings
+-   Manage bookings
+-   Recurring bookings
+-   Room availability
+-   Room booking calendar
 
 ## Prerequisites
 
@@ -83,13 +87,6 @@ This creates an optimized version of the component and packages it into a ZIP fi
 -   `webpack.config.js`: Webpack configuration
 -   `tailwind.config.js`: Tailwind CSS configuration
 -   `package.json`: Project dependencies and scripts
-
-## Customization
-
-You can customize the component by editing the files in the `src/` directory. The main customization points are:
-
--   replace all occurences of `com_roombooking` with your component name, don't forget to change the name in the `package.json` file and the `webpack.config.js` file too
--   replace all occurences of `Simpleboilerplate` and `boilerplate` with your component name
 
 ## Contributing
 
