@@ -12,6 +12,7 @@ export function updateRecurrenceEndDateRequired() {
     } else {
         endDateField.removeAttribute('required');
         recurrenceTypeSelect.removeAttribute('required');
+        recurrenceTypeSelect.classList.remove('validate-validRecurrenceType');
         recurrenceTypeSelect.selectedIndex = 0;
         if (feedback) {
             feedback.remove();
