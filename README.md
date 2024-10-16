@@ -95,3 +95,12 @@ Contributions are welcome! Please create a pull request or open an issue for sug
 ## License
 
 MIT License; see LICENSE.txt
+
+## Todo
+
+-   add send mail function for booking confirmation and send mail to admin.
+-   add ajax booking to frontend
+-   config parameters for views, like how many rooms are shown etc.
+-   function to add more days to the booking
+-   maybe add a payment gateway
+-   generate pdf bill for the booking and send it to the customer
