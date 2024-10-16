@@ -85,10 +85,11 @@ module.exports = (env, argv) => {
         path.join(joomlaPath, 'media/com_roombooking'),
     ];
 
-    // Clean directories before build
-    cleanDirectories(directoriesToClean);
-
     if (!isProduction) {
+        // Clean directories before build
+        console.log(chalk.red(`${logSymbols.error} Cleaning directories...`));
+        cleanDirectories(directoriesToClean);
+
         copyPatterns.push(
             {
                 from: 'dist/roombooking.xml',
