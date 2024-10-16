@@ -2,7 +2,7 @@
 <extension type="component"
            method="upgrade">
     <name>com_roombooking</name>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <description>COM_ROOMBOOKING_XML_DESCRIPTION</description>
     <author>Jörg Schöneburg</author>
     <creationDate>2024-05-15</creationDate>
@@ -78,4 +78,11 @@
         <folder>js</folder>
         <folder>css</folder>
     </media>
+
+    <updateservers>
+        <server type="extension"
+                priority="1"
+                name="Room Booking Update Site">
+            https://github.com/jswebschmiede/com_roombooking/blob/master/manifest.xml</server>
+    </updateservers>
 </extension>
