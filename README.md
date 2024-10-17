@@ -98,7 +98,7 @@ MIT License; see LICENSE.txt
 
 ## Todo
 
--   add send mail function for booking confirmation and send mail to admin.
+-   ~~add send mail function for booking confirmation and send mail to admin.~~
 -   add ajax booking to frontend
 -   config parameters for views, like how many rooms are shown etc.
 -   function to add more days to the booking
