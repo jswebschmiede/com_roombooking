@@ -8,7 +8,6 @@ const chalk = require('chalk');
 const logSymbols = require('log-symbols');
 const fs = require('fs');
 const rimraf = require('rimraf');
-const { type } = require('os');
 
 let lastPercentage = 0;
 
@@ -150,7 +149,8 @@ module.exports = (env, argv) => {
         mode: isProduction ? 'production' : 'development',
         devtool: isProduction ? 'source-map' : 'eval-source-map',
         entry: {
-            main: './src/media/com_roombooking/js/main.js',
+            admin: './src/media/com_roombooking/js/admin.js',
+            site: './src/media/com_roombooking/js/site.js',
         },
         output: {
             filename: 'media/com_roombooking/js/[name].bundle.js',
@@ -183,7 +183,7 @@ module.exports = (env, argv) => {
                 profile: false, // Disables detailed profiling
             }),
             new MiniCssExtractPlugin({
-                filename: 'media/com_roombooking/css/styles.min.css',
+                filename: 'media/com_roombooking/css/[name].min.css',
             }),
             new CopyPlugin({
                 patterns: copyPatterns,
