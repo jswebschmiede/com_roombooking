@@ -10,18 +10,28 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\Component\Roombooking\Site\Helper\RoombookingHelper;
 
 /** @var \Joomla\Component\Roombooking\Administrator\View\Mailtemplate\HtmlView $this */
+
+/** @var Joomla\CMS\Document\HtmlDocument $doc */
+$doc = Factory::getApplication()->getDocument();
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
 	->useScript('form.validate')
-	->useScript('bootstrap.modal');
+	->useScript('component.roombooking.admin')
+	->useStyle('component.roombooking.admin');
+
+$doc->addScriptOptions('com_roombooking', [
+	'placeholders' => RoombookingHelper::getMailPlaceholders(),
+]);
 ?>
 
 <form

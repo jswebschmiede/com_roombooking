@@ -12,16 +12,12 @@ namespace Joomla\Component\Roombooking\Site\Controller;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
-use Joomla\Input\Input;
 use Joomla\CMS\Language\Text;
-use Joomla\Database\ParameterType;
-use Joomla\Database\DatabaseDriver;
-use Joomla\Database\DatabaseInterface;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\Component\Roombooking\Site\Helper\TokenHelper;
+use Joomla\Component\Roombooking\Site\Helper\RoombookingHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -34,20 +30,6 @@ use Joomla\Component\Roombooking\Site\Helper\TokenHelper;
  */
 class BookingController extends BaseController
 {
-    private array $mailPlaceholders = [
-        '{{customer_name}}',
-        '{{customer_email}}',
-        '{{customer_phone}}',
-        '{{customer_address}}',
-        '{{booking_date}}',
-        '{{recurring}}',
-        '{{recurrence_type}}',
-        '{{recurrence_end_date}}',
-        '{{total_amount}}',
-        '{{room_id}}',
-        '{{room_name}}'
-    ];
-
     /**
      * Replace the placeholders in the mail template with the booking data
      *
@@ -65,11 +47,10 @@ class BookingController extends BaseController
 
         $data['room_name'] = $room->name;
 
-        foreach ($this->mailPlaceholders as $placeholder) {
-            $key = trim($placeholder, '{}');
-            if (isset($data[$key])) {
-                $template->body = str_replace($placeholder, $data[$key], $template->body);
-                $template->subject = str_replace($placeholder, $data[$key], $template->subject);
+        foreach (RoombookingHelper::getMailPlaceholders() as $placeholder => $label) {
+            if (isset($data[$placeholder])) {
+                $template->body = str_replace($placeholder, $data[$placeholder], $template->body);
+                $template->subject = str_replace($placeholder, $data[$placeholder], $template->subject);
             }
 
             // Check if booking_details placeholder exists in template body
@@ -83,6 +64,10 @@ class BookingController extends BaseController
             }
         }
 
+        // Convert markdown to html
+        $parsedown = new \Parsedown();
+        $template->body = $parsedown->text($template->body);
+
         return $template;
     }
 
@@ -94,20 +79,20 @@ class BookingController extends BaseController
      */
     private function prepareBookingDetails(array $data): string
     {
-        $bookingDetails = "<p><strong>Buchungsdatum:</strong> {$data['booking_date']}</p>";
-        $bookingDetails .= "<p><strong>Wiederholend:</strong> " . ($data['recurring'] ? "Ja" : "Nein") . "</p>";
+        $bookingDetails = "**Buchungsdatum:** {$data['booking_date']}\n\n";
+        $bookingDetails .= "**Wiederholend:** " . ($data['recurring'] ? "Ja" : "Nein") . "\n\n";
         if ($data['recurring']) {
-            $bookingDetails .= "<p><strong>Wiederholungstyp:</strong> {$data['recurrence_type']}</p>";
-            $bookingDetails .= "<p><strong>Enddatum der Wiederholung:</strong> {$data['recurrence_end_date']}</p>";
+            $bookingDetails .= "**Wiederholungstyp:** " . RoombookingHelper::translateRecurrenceType($data['recurrence_type']) . "\n\n";
+            $bookingDetails .= '**Enddatum der Wiederholung:** ' . HTMLHelper::_('date', $data['recurrence_end_date'], Text::_('DATE_FORMAT_LC4')) . "\n\n";
         }
-        $bookingDetails .= "<p><strong>Gesamtbetrag:</strong> {$data['total_amount']}</p>";
+        $bookingDetails .= "**Gesamtbetrag:** {$data['total_amount']}\n\n";
 
-        $bookingDetails .= "<h3>Kundendaten:</h3>";
-        $bookingDetails .= "<p><strong>Kundenname:</strong> {$data['customer_name']}</p>";
-        $bookingDetails .= "<p><strong>E-Mail:</strong> {$data['customer_email']}</p>";
-        $bookingDetails .= "<p><strong>Telefon:</strong> {$data['customer_phone']}</p>";
-        $bookingDetails .= "<p><strong>Adresse:</strong> {$data['customer_address']}</p>";
-        $bookingDetails .= "<p><strong>Raumname:</strong> {$data['room_name']}</p>";
+        $bookingDetails .= "### Kundendaten:\n\n";
+        $bookingDetails .= "**Kundenname:** {$data['customer_name']}\n\n";
+        $bookingDetails .= "**E-Mail:** {$data['customer_email']}\n\n";
+        $bookingDetails .= "**Telefon:** {$data['customer_phone']}\n\n";
+        $bookingDetails .= "**Adresse:** {$data['customer_address']}\n\n";
+        $bookingDetails .= "**Raumname:** {$data['room_name']}\n";
 
         return $bookingDetails;
     }
@@ -227,10 +212,7 @@ class BookingController extends BaseController
 
                 $customerMailTemplate->body = str_replace('{{confirm_link}}', $confirmLink, $customerMailTemplate->body);
 
-                // TODO: send email to admin
                 $this->sendEmail($adminMailTemplate, $validData, 'admin');
-
-                // TODO: send email to customer
                 $this->sendEmail($customerMailTemplate, $validData, 'customer');
 
                 // Clear the form data in the session
