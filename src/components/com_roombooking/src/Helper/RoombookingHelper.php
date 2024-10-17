@@ -74,7 +74,7 @@ abstract class RoombookingHelper
     public static function getMailPlaceholders(): array
     {
         return [
-            'booking_details' => Text::_('COM_ROOMBOOKING_MAIL_PLACEHOLDER_BOOKING_DETAILS'),
+            '{{booking_details}}' => Text::_('COM_ROOMBOOKING_MAIL_PLACEHOLDER_BOOKING_DETAILS'),
             '{{customer_name}}' => Text::_('COM_ROOMBOOKING_MAIL_PLACEHOLDER_CUSTOMER_NAME'),
             '{{customer_email}}' => Text::_('COM_ROOMBOOKING_MAIL_PLACEHOLDER_CUSTOMER_EMAIL'),
             '{{customer_phone}}' => Text::_('COM_ROOMBOOKING_MAIL_PLACEHOLDER_CUSTOMER_PHONE'),
