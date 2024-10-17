@@ -11,7 +11,6 @@
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Session\Session;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Language\Multilanguage;
 
@@ -29,9 +28,7 @@ $userId = $user->get('id');
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn = $this->escape($this->state->get('list.direction'));
 $saveOrder = $listOrder == 'a.id';
-
 $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
-
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_roombooking&view=mailtemplates'); ?>" method="post"
