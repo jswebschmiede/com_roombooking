@@ -18,8 +18,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->useScript('com_roombooking.main');
-$wa->useStyle('com_roombooking.style');
+$wa->useScript('component.roombooking.site');
+$wa->useStyle('component.roombooking.site');
 HTMLHelper::_('bootstrap.tooltip', '.hasTooltip');
 ?>
 

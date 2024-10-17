@@ -6,9 +6,9 @@
     "license": "GPL-2.0-or-later",
     "assets": [
         {
-            "name": "com_roombooking.main",
+            "name": "component.roombooking.admin",
             "type": "script",
-            "uri": "com_roombooking/main.bundle.js",
+            "uri": "com_roombooking/admin.bundle.js",
             "dependencies": ["core"],
             "attributes": {
                 "defer": true
@@ -16,9 +16,25 @@
             "version": "1.0.0"
         },
         {
-            "name": "com_roombooking.style",
+            "name": "component.roombooking.site",
+            "type": "script",
+            "uri": "com_roombooking/site.bundle.js",
+            "dependencies": ["core"],
+            "attributes": {
+                "defer": true
+            },
+            "version": "1.0.0"
+        },
+        {
+            "name": "component.roombooking.admin",
             "type": "style",
-            "uri": "com_roombooking/styles.min.css",
+            "uri": "com_roombooking/admin.min.css",
+            "version": "1.0.0"
+        },
+        {
+            "name": "component.roombooking.site",
+            "type": "style",
+            "uri": "com_roombooking/site.min.css",
             "version": "1.0.0"
         }
     ]

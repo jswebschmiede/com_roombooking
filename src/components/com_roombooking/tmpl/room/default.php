@@ -24,8 +24,8 @@ $doc = Factory::getApplication()->getDocument();
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $doc->getWebAssetManager();
-$wa->useScript('com_roombooking.main');
-$wa->useStyle('com_roombooking.style');
+$wa->useScript('component.roombooking.site');
+$wa->useStyle('component.roombooking.site');
 $wa->useScript('form.validate');
 HTMLHelper::_('bootstrap.tooltip', '.hasTooltip');
 
@@ -38,7 +38,6 @@ $doc->addScriptOptions('com_roombooking', [
 	'price' => RoombookingHelper::formatPrice($this->item->price, false),
 	'vatRate' => $this->vatRate,
 ]);
-
 ?>
 
 <?php if ($this->params->get('show_page_heading')): ?>
