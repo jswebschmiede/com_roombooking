@@ -26,7 +26,11 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
  * View class for a list of rooms.
- *
+ * 
+ * @property-read array $items
+ * @property-read Pagination $pagination
+ * @property-read Registry $state
+ * 
  * @since  1.0.0
  */
 class HtmlView extends BaseHtmlView
@@ -78,37 +82,6 @@ class HtmlView extends BaseHtmlView
 	 * @since 1.0.0
 	 */
 	private $isEmptyState = false;
-
-	/**
-	 * Get the state
-	 *
-	 * @return Registry
-	 */
-	public function getState(): Registry
-	{
-		return $this->state;
-	}
-
-	/**
-	 * Get the items
-	 *
-	 * @return array
-	 */
-	public function getItems(): array
-	{
-		return $this->items;
-	}
-
-	/**
-	 * Get the pagination
-	 *
-	 * @return Pagination
-	 */
-	public function getPagination(): Pagination
-	{
-		return $this->pagination;
-	}
-
 
 	/**
 	 * Method to display the view.

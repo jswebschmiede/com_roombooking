@@ -25,7 +25,7 @@ use Joomla\Component\Roombooking\Administrator\Extension\RoombookingComponent;
 require_once JPATH_ADMINISTRATOR . '/components/com_roombooking/vendor/autoload.php';
 
 /**
- * The mywalks service provider.
+ * The service provider.
  *
  * @since  4.0.0
  */

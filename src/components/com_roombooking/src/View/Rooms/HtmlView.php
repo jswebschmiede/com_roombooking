@@ -10,7 +10,6 @@
 
 namespace Joomla\Component\Roombooking\Site\View\Rooms;
 
-use NumberFormatter;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;

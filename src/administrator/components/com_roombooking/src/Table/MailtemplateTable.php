@@ -10,13 +10,9 @@
 
 namespace Joomla\Component\Roombooking\Administrator\Table;
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Table;
-use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Event\DispatcherInterface;
-use Joomla\CMS\Application\ApplicationHelper;
-use Joomla\CMS\Versioning\VersionableTableInterface;
 
 defined('_JEXEC') or die;
 

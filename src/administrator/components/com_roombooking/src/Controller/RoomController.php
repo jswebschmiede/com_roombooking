@@ -40,7 +40,7 @@ class RoomController extends FormController
 	 *
 	 * @since   2.5
 	 */
-	public function batch($model = null)
+	public function batch($model = null): bool
 	{
 		$this->checkToken();
 

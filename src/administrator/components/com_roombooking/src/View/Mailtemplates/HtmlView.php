@@ -19,15 +19,13 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Toolbar\Button\DropdownButton;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
  * View class for a list of mailtemplates.
- * @property-read Form $filterForm
- * @property-read array $activeFilters
+ * 
  * @property-read array $items
  * @property-read Pagination $pagination
  * @property-read Registry $state

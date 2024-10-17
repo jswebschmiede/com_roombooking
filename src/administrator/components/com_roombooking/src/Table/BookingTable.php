@@ -14,12 +14,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Table;
-use Joomla\CMS\Access\Access;
-use Joomla\CMS\Language\Text;
-use Joomla\Registry\Registry;
-use Joomla\Utilities\ArrayHelper;
 use Joomla\Database\DatabaseDriver;
-use Joomla\CMS\Helper\ContentHelper;
 use Joomla\Event\DispatcherInterface;
 
 /**

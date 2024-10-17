@@ -62,6 +62,7 @@ class RoomModel extends FormModel
 
 	/**
 	 * Get the room ID from the request
+	 * 
 	 * @return int
 	 */
 	private function getId(): int
@@ -80,6 +81,8 @@ class RoomModel extends FormModel
 	}
 
 	/**
+	 * Summary of getItem
+	 * 
 	 * @param int|null $pk
 	 * @return object|bool
 	 * @since 1.0.0
@@ -155,6 +158,7 @@ class RoomModel extends FormModel
 
 	/**
 	 * Summary of getForm
+	 * 
 	 * @param array $data
 	 * @param bool $loadData
 	 * @return Form
@@ -163,13 +167,11 @@ class RoomModel extends FormModel
 	public function getForm($data = array(), $loadData = true): Form
 	{
 		$form = $this->loadForm(
-			'com_roombooking.booking',   // just a unique name to identify the form
-			'booking_form',              // the filename of the XML form definition
-			// Joomla will look in the site/forms folder for this file
+			'com_roombooking.room',
+			'room_form',
 			array(
-				'control' => 'jform',    // the name of the array for the POST parameters
-				'load_data' => $loadData // if set to true, then there will be a callback to 
-				// loadFormData to supply the data
+				'control' => 'jform',
+				'load_data' => $loadData
 			)
 		);
 
@@ -183,14 +185,15 @@ class RoomModel extends FormModel
 
 	/**
 	 * Summary of loadFormData
+	 * 
 	 * @return mixed
 	 */
 	protected function loadFormData(): mixed
 	{
 		// Check the session for previously entered form data.
 		$data = Factory::getApplication()->getUserState(
-			'com_roombooking.booking',  // a unique name to identify the data in the session
-			array("email" => ".@.") // prefill data if no data found in session
+			'com_roombooking.room',
+			array()
 		);
 
 		return $data;
@@ -198,6 +201,7 @@ class RoomModel extends FormModel
 
 	/**
 	 * Summary of getFormFactory
+	 * 
 	 * @return FormFactoryInterface
 	 */
 	public function getFormFactory(): FormFactoryInterface
@@ -207,6 +211,7 @@ class RoomModel extends FormModel
 
 	/**
 	 * Get the booking dates as JSON
+	 * 
 	 * @return string
 	 */
 	public function getBookingDatesJson(): string

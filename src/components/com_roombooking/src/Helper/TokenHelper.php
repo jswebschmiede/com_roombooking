@@ -19,8 +19,23 @@ use Joomla\Database\DatabaseInterface;
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
+/**
+ * TokenHelper class
+ * 
+ * @since 1.0.0
+ */
 abstract class TokenHelper
 {
+	/**
+	 * Save the token in the database
+	 * 
+	 * @param DatabaseInterface $db
+	 * @param int $bookingId
+	 * @param string $token
+	 * @param string $type
+	 * @param DateTime $expiresAt
+	 * @return bool
+	 */
 	public static function saveToken(DatabaseInterface $db, int $bookingId, string $token, string $type, DateTime $expiresAt): bool
 	{
 		$query = $db->getQuery(true);
@@ -38,6 +53,13 @@ abstract class TokenHelper
 		return $db->execute();
 	}
 
+	/**
+	 * Get the valid token info
+	 * 
+	 * @param DatabaseInterface $db
+	 * @param string $token
+	 * @return object|null
+	 */
 	public static function getValidTokenInfo(DatabaseInterface $db, string $token): ?object
 	{
 		$query = $db->getQuery(true);
@@ -52,6 +74,14 @@ abstract class TokenHelper
 		return $db->loadObject();
 	}
 
+	/**
+	 * Get the token by booking id
+	 * 
+	 * @param DatabaseInterface $db
+	 * @param int $bookingId
+	 * @param string $type
+	 * @return string|null
+	 */
 	public static function getTokenByBookingId(DatabaseInterface $db, int $bookingId, string $type): ?string
 	{
 		$query = $db->getQuery(true);
@@ -68,6 +98,13 @@ abstract class TokenHelper
 		return $db->loadResult();
 	}
 
+	/**
+	 * Delete the token
+	 * 
+	 * @param DatabaseInterface $db
+	 * @param string $token
+	 * @return bool
+	 */
 	public static function deleteToken(DatabaseInterface $db, string $token): bool
 	{
 		$query = $db->getQuery(true);
@@ -80,6 +117,11 @@ abstract class TokenHelper
 		return $db->execute();
 	}
 
+	/**
+	 * Generate a random token
+	 * 
+	 * @return string
+	 */
 	public static function generateToken(): string
 	{
 		return bin2hex(random_bytes(32));

@@ -85,11 +85,6 @@ class BookingsModel extends ListModel
 	 * @param string $id
 	 * @return string
 	 */
-	/**
-	 * Summary of getStoreId
-	 * @param string $id
-	 * @return string
-	 */
 	protected function getStoreId($id = ''): string
 	{
 		// Compile the store id.
@@ -102,6 +97,10 @@ class BookingsModel extends ListModel
 		return parent::getStoreId($id);
 	}
 
+	/**
+	 * Summary of getListQuery
+	 * @return DatabaseQuery
+	 */
 	protected function getListQuery(): DatabaseQuery
 	{
 		$db = $this->getDatabase();
@@ -127,7 +126,6 @@ class BookingsModel extends ListModel
 				]
 			)
 		);
-
 
 		$query->from($db->quoteName('#__roombooking_bookings', 'a'));
 
@@ -198,7 +196,6 @@ class BookingsModel extends ListModel
 		return $query;
 	}
 
-
 	/**
 	 * Returns a reference to the a Table object, always creating it.
 	 *
@@ -214,7 +211,6 @@ class BookingsModel extends ListModel
 	{
 		return parent::getTable($type, $prefix, $config);
 	}
-
 
 	/**
 	 * Summary of getItems

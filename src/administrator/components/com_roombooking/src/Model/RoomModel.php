@@ -18,7 +18,6 @@ use Joomla\String\StringHelper;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Form\FormFactoryInterface;
 use Joomla\CMS\Versioning\VersionableModelTrait;
-use Joomla\Component\Categories\Administrator\Helper\CategoriesHelper;
 
 defined('_JEXEC') or die;
 

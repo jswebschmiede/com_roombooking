@@ -20,6 +20,11 @@ use Joomla\Component\Roombooking\Site\Helper\RoombookingHelper;
 
 /**
  * View class for a list of bookings.
+ * 
+ * @property-read array $items
+ * @property-read Pagination $pagination
+ * @property-read Registry $state
+ * @property-read JUser $user
  *
  * @since  1.0.0
  */
@@ -73,36 +78,6 @@ class HtmlView extends BaseHtmlView
 	protected $state;
 
 	/**
-	 * Get the state
-	 *
-	 * @return Registry
-	 */
-	public function getState(): Registry
-	{
-		return $this->state;
-	}
-
-	/**
-	 * Get the items
-	 *
-	 * @return array
-	 */
-	public function getItems(): array
-	{
-		return $this->items;
-	}
-
-	/**
-	 * Get the pagination
-	 *
-	 * @return Pagination
-	 */
-	public function getPagination(): Pagination
-	{
-		return $this->pagination;
-	}
-
-	/**
 	 * Display the view
 	 *
 	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
@@ -112,7 +87,6 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null): void
 	{
 		$this->user = Factory::getApplication()->getIdentity();
-
 		$this->items = $this->get('Items');
 		$this->pagination = $this->get('Pagination');
 		$this->state = $this->get('State');
@@ -148,7 +122,7 @@ class HtmlView extends BaseHtmlView
 
 		ToolbarHelper::title(Text::_('COM_ROOMBOOKING_MANAGER_BOOKINGS'), 'bookmark bookings');
 
-		if ($canDo->get('core.create') || \count($user->getAuthorisedCategories('com_roombooking', 'core.create')) > 0) {
+		if ($canDo->get('core.create') || $canDo->get('core.create')) {
 			$toolbar->addNew('booking.add');
 		}
 
@@ -165,7 +139,6 @@ class HtmlView extends BaseHtmlView
 			if ($canDo->get('core.edit.state')) {
 				if ($this->state->get('filter.published') != 2) {
 					$childBar->publish('bookings.publish')->listCheck(true);
-
 					$childBar->unpublish('bookings.unpublish')->listCheck(true);
 				}
 

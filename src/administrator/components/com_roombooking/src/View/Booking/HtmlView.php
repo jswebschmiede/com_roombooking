@@ -18,7 +18,11 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
  * View to edit a booking
- *
+ * 
+ * @property-read Form $form
+ * @property-read Registry $state
+ * @property-read object $item
+ * 
  * @since  1.0.0
  */
 class HtmlView extends BaseHtmlView
@@ -53,36 +57,6 @@ class HtmlView extends BaseHtmlView
 	 * @var  \JObject
 	 */
 	protected $canDo;
-
-	/**
-	 * Get the state
-	 *
-	 * @return Registry
-	 */
-	public function getState(): Registry
-	{
-		return $this->state;
-	}
-
-	/**
-	 * Get the form
-	 *
-	 * @return Form
-	 */
-	public function getForm(): Form
-	{
-		return $this->form;
-	}
-
-	/**
-	 * Get the item
-	 *
-	 * @return object
-	 */
-	public function getItem(): object
-	{
-		return $this->item;
-	}
 
 	/**
 	 * Method to display the view.
@@ -130,7 +104,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::title($isNew ? Text::_('COM_ROOMBOOKING_MANAGER_BOOKING_NEW') : Text::_('COM_ROOMBOOKING_MANAGER_BOOKING_EDIT'), 'bookmark bookings');
 
 		// If not checked out, can save the item.
-		if ($canDo->get('core.edit') || \count($user->getAuthorisedCategories('com_roombooking', 'core.create')) > 0) {
+		if ($canDo->get('core.edit') || $canDo->get('core.create')) {
 			$toolbar->apply('booking.apply');
 		}
 

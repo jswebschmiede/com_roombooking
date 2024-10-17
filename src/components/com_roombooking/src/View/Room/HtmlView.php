@@ -16,7 +16,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
@@ -94,9 +93,7 @@ class HtmlView extends BaseHtmlView
 
 		// Set the validation texts for the recurrence end date and booking date fields
 		$this->form->setFieldAttribute('recurrence_end_date', 'data-validation-text', Text::_('COM_ROOMBOOKING_BOOKING_RECURRENCE_END_DATE_ERROR'));
-
 		$this->form->setFieldAttribute('booking_date', 'data-validation-text', Text::_('COM_ROOMBOOKING_BOOKING_DATE_ERROR'));
-
 		$this->form->setValue('room_id', null, $this->item->id);
 
 		// Check for errors.

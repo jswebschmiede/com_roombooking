@@ -35,12 +35,14 @@ class BookingModel extends ItemModel
 
 	/**
 	 * Array to store the reccurence dates
+	 * 
 	 * @var array
 	 */
 	private array $_reccurenceDates = [];
 
 	/**
-	 * Calculate the reccrence dates based of the reccurce type
+	 * Calculate the reccurence dates based of the reccurrence type
+	 * 
 	 * @param array $data
 	 * @return array
 	 */
@@ -82,6 +84,7 @@ class BookingModel extends ItemModel
 
 	/**
 	 * Check if the booking is recurring
+	 * 
 	 * @param array $data
 	 * @return bool
 	 */
@@ -92,6 +95,7 @@ class BookingModel extends ItemModel
 
 	/**
 	 * Save the booking form data
+	 * 
 	 * @param array $data
 	 * @return bool
 	 */
@@ -232,6 +236,7 @@ class BookingModel extends ItemModel
 
 	/**
 	 * Get the mail template
+	 * 
 	 * @param string $templateType
 	 * @return object
 	 */
@@ -261,6 +266,7 @@ class BookingModel extends ItemModel
 
 	/**
 	 * Confirm the booking
+	 * 
 	 * @param int $bookingId
 	 * @return bool
 	 */
@@ -281,6 +287,12 @@ class BookingModel extends ItemModel
 		return $db->execute();
 	}
 
+	/**
+	 * Summary of getItem
+	 * 
+	 * @param int $pk
+	 * @return object
+	 */
 	public function getItem($pk = null): object
 	{
 		return parent::getItem($pk);

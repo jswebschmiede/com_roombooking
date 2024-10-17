@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * @package     com_roombooking
  * @version     1.0.0
@@ -12,7 +11,6 @@
 namespace Joomla\Component\Roombooking\Site\Helper;
 
 use Joomla\CMS\Language\Multilanguage;
-use Joomla\CMS\Categories\CategoryNode;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -21,7 +19,7 @@ use Joomla\CMS\Categories\CategoryNode;
 /**
  * Roombooking Component Route Helper.
  *
- * @since  1.5
+ * @since  1.0.0
  */
 abstract class RouteHelper
 {
@@ -34,7 +32,7 @@ abstract class RouteHelper
      *
      * @return  string  The room route.
      *
-     * @since   1.5
+     * @since   1.0.0
      */
     public static function getRoomRoute($id, $slug, $language = null, $layout = null): string
     {

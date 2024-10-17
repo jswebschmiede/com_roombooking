@@ -79,6 +79,7 @@ class BookingController extends BaseController
      */
     private function prepareBookingDetails(array $data): string
     {
+        // TODO: translate the strings
         $bookingDetails = "**Buchungsdatum:** {$data['booking_date']}\n\n";
         $bookingDetails .= "**Wiederholend:** " . ($data['recurring'] ? "Ja" : "Nein") . "\n\n";
         if ($data['recurring']) {
@@ -226,7 +227,7 @@ class BookingController extends BaseController
 
     /**
      * Confirm task for the booking
-     *
+     * 
      * @return void
      */
     public function confirm(): void
@@ -250,6 +251,7 @@ class BookingController extends BaseController
 
         $bookingId = $tokenObject->booking_id;
 
+        // TODO: translate the strings
         if ($tokenObject->type === 'email_confirmation') {
             if (
                 TokenHelper::deleteToken($db, $token) &&

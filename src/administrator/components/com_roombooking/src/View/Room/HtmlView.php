@@ -25,7 +25,11 @@ use Joomla\Component\Content\Administrator\Helper\ContentHelper;
 
 /**
  * View class for a list of rooms.
- *
+ * 
+ * @property-read Form $form
+ * @property-read Registry $state
+ * @property-read object $item
+ * 
  * @since   1.0.0
  */
 class HtmlView extends BaseHtmlView
@@ -60,36 +64,6 @@ class HtmlView extends BaseHtmlView
 	 * @var  \JObject
 	 */
 	protected $canDo;
-
-	/**
-	 * Get the state
-	 *
-	 * @return Registry
-	 */
-	public function getState(): Registry
-	{
-		return $this->state;
-	}
-
-	/**
-	 * Get the form
-	 *
-	 * @return Form
-	 */
-	public function getForm(): Form
-	{
-		return $this->form;
-	}
-
-	/**
-	 * Get the item
-	 *
-	 * @return object
-	 */
-	public function getItem(): object
-	{
-		return $this->item;
-	}
 
 	/**
 	 * Method to display the view.

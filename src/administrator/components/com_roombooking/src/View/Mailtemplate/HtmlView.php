@@ -109,7 +109,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::title($isNew ? Text::_('COM_ROOMBOOKING_MANAGER_EMAILTEMPLATE_NEW') : Text::_('COM_ROOMBOOKING_MANAGER_EMAILTEMPLATE_EDIT'), 'bookmark mailtemplate');
 
 		// If not checked out, can save the item.
-		if ($canDo->get('core.edit') || \count($user->getAuthorisedCategories('com_roombooking', 'core.create')) > 0) {
+		if ($canDo->get('core.edit') || $canDo->get('core.create')) {
 			$toolbar->apply('mailtemplate.apply');
 			$toolbar->save('mailtemplate.save');
 		}

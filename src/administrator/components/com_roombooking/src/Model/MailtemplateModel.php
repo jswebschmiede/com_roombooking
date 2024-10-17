@@ -14,11 +14,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Language\Text;
-use Joomla\String\StringHelper;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Form\FormFactoryInterface;
-use Joomla\CMS\Versioning\VersionableModelTrait;
-use Joomla\Component\Categories\Administrator\Helper\CategoriesHelper;
 
 defined('_JEXEC') or die;
 
@@ -142,7 +139,6 @@ class MailtemplateModel extends AdminModel
 
 		return parent::validate($form, $data, $group);
 	}
-
 
 	/**
 	 * Summary of getFormFactory
