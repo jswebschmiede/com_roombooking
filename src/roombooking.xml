@@ -35,6 +35,7 @@
             <folder>services</folder>
             <folder>sql</folder>
             <folder>src</folder>
+            <folder>vendor</folder>
         </files>
 
         <languages folder="administrator/components/com_roombooking/language">

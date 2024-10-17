@@ -1,0 +1,13 @@
+{
+    "name": "joomla/com_roombooking",
+    "type": "project",
+    "config": {
+        "vendor-dir": "src/administrator/components/com_roombooking/vendor",
+        "platform": {
+            "php": "8.3"
+        }
+    },
+    "require": {
+        "erusev/parsedown": "^1.7"
+    }
+}

@@ -21,6 +21,9 @@ use Joomla\CMS\Dispatcher\ComponentDispatcherFactoryInterface;
 use Joomla\CMS\Extension\Service\Provider\ComponentDispatcherFactory;
 use Joomla\Component\Roombooking\Administrator\Extension\RoombookingComponent;
 
+// Load Composer autoloader
+require_once JPATH_ADMINISTRATOR . '/components/com_roombooking/vendor/autoload.php';
+
 /**
  * The mywalks service provider.
  *
