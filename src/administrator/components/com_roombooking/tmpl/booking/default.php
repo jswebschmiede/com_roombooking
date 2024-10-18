@@ -23,14 +23,10 @@ $wa->getRegistry()->addExtensionRegistryFile('com_contenthistory');
 $wa->useScript('keepalive')
 	->useScript('form.validate')
 	->useScript('com_contenthistory.admin-history-versions');
-
-$state = $this->getState();
-$item = $this->getItem();
-$form = $this->getForm();
 ?>
 
 <form
-	action="<?php echo Route::_('index.php?option=com_roombooking&view=booking&layout=edit&id=' . (int) $item->id); ?>"
+	action="<?php echo Route::_('index.php?option=com_roombooking&view=booking&layout=edit&id=' . (int) $this->item->id); ?>"
 	method="post" enctype="multipart/form-data" name="adminForm" id="booking-form" class="form-validate">
 
 	<div id="validation-form-failed" data-backend-detail="booking"
@@ -45,14 +41,14 @@ $form = $this->getForm();
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_ROOMBOOKING_BOOKING_DETAILS')); ?>
 		<div class="row">
 			<div class="col-lg-9">
-				<?php echo $form->renderField('room_id'); ?>
-				<?php echo $form->renderField('booking_dates'); ?>
-				<?php echo $form->renderField('confirmed'); ?>
-				<?php echo $form->renderField('payment_status'); ?>
-				<?php echo $form->renderField('recurring'); ?>
-				<?php echo $form->renderField('recurrence_type'); ?>
-				<?php echo $form->renderField('recurrence_end_date'); ?>
-				<?php echo $form->renderField('total_amount'); ?>
+				<?php echo $this->form->renderField('room_id'); ?>
+				<?php echo $this->form->renderField('booking_dates'); ?>
+				<?php echo $this->form->renderField('confirmed'); ?>
+				<?php echo $this->form->renderField('payment_status'); ?>
+				<?php echo $this->form->renderField('recurring'); ?>
+				<?php echo $this->form->renderField('recurrence_type'); ?>
+				<?php echo $this->form->renderField('recurrence_end_date'); ?>
+				<?php echo $this->form->renderField('total_amount'); ?>
 			</div>
 			<div class="col-lg-3">
 				<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
@@ -63,11 +59,11 @@ $form = $this->getForm();
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'customer', Text::_('COM_ROOMBOOKING_CUSTOMER_INFO')); ?>
 		<div class="row">
 			<div class="col-lg-9">
-				<?php echo $form->renderField('customer_name'); ?>
-				<?php echo $form->renderField('customer_address'); ?>
-				<?php echo $form->renderField('customer_phone'); ?>
-				<?php echo $form->renderField('customer_email'); ?>
-				<?php echo $form->renderField('privacy_accepted'); ?>
+				<?php echo $this->form->renderField('customer_name'); ?>
+				<?php echo $this->form->renderField('customer_address'); ?>
+				<?php echo $this->form->renderField('customer_phone'); ?>
+				<?php echo $this->form->renderField('customer_email'); ?>
+				<?php echo $this->form->renderField('privacy_accepted'); ?>
 			</div>
 		</div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>

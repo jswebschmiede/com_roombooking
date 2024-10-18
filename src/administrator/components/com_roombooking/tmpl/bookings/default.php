@@ -24,16 +24,13 @@ $wa = $this->document->getWebAssetManager();
 $wa->useScript('table.columns')
 	->useScript('multiselect');
 
-$state = $this->getState();
-$items = $this->getItems();
-$pagination = $this->getPagination();
 $user = $this->getCurrentUser();
 $userId = $user->get('id');
-$listOrder = $this->escape($state->get('list.ordering'));
-$listDirn = $this->escape($state->get('list.direction'));
+$listOrder = $this->escape($this->state->get('list.ordering'));
+$listDirn = $this->escape($this->state->get('list.direction'));
 $saveOrder = $listOrder == 'a.ordering';
 
-if ($saveOrder && !empty($items)) {
+if ($saveOrder && !empty($this->items)) {
 	$saveOrderingUrl = 'index.php?option=com_roombooking&task=bookings.saveOrderAjax&tmpl=component&' . Session::getFormToken() . '=1';
 	HTMLHelper::_('draggablelist.draggable');
 }
@@ -52,7 +49,7 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 				echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
 				?>
 
-				<?php if (empty($items)): ?>
+				<?php if (empty($this->items)): ?>
 					<div class="alert alert-info">
 						<span class="fa fa-info-circle" aria-hidden="true"></span>
 						<span class="sr-only"><?php echo Text::_('INFO'); ?></span>
@@ -115,7 +112,7 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 						</thead>
 						<tbody <?php if ($saveOrder): ?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>"
 								data-direction="<?php echo strtolower($listDirn); ?>" data-nested="true" <?php endif; ?>>
-							<?php foreach ($items as $i => $item):
+							<?php foreach ($this->items as $i => $item):
 								$ordering = ($listOrder == 'ordering');
 								$canCreate = $user->authorise('core.create', 'com_roombooking');
 								$canEdit = $user->authorise('core.edit', 'com_roombooking');
@@ -223,7 +220,7 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 					</table>
 				<?php endif; ?>
 
-				<?php echo $pagination->getListFooter(); ?>
+				<?php echo $this->pagination->getListFooter(); ?>
 
 				<input type="hidden" name="task" value="">
 				<input type="hidden" name="boxchecked" value="0">

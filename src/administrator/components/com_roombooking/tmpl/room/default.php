@@ -23,13 +23,10 @@ $wa->getRegistry()->addExtensionRegistryFile('com_contenthistory');
 $wa->useScript('keepalive')
 	->useScript('form.validate')
 	->useScript('com_contenthistory.admin-history-versions');
-
-$state = $this->getState();
-$item = $this->getItem();
-$form = $this->getForm();
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_roombooking&view=room&layout=edit&id=' . (int) $item->id); ?>"
+<form
+	action="<?php echo Route::_('index.php?option=com_roombooking&view=room&layout=edit&id=' . (int) $this->item->id); ?>"
 	method="post" enctype="multipart/form-data" name="adminForm" id="room-form" class="form-validate">
 
 	<div id="validation-form-failed" data-backend-detail="room"
@@ -44,11 +41,11 @@ $form = $this->getForm();
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_ROOMBOOKING_ROOM_DETAILS')); ?>
 		<div class="row">
 			<div class="col-lg-9">
-				<?php echo $form->renderField('short_description'); ?>
-				<?php echo $form->renderField('description'); ?>
-				<?php echo $form->renderField('capacity'); ?>
-				<?php echo $form->renderField('size'); ?>
-				<?php echo $form->renderField('price'); ?>
+				<?php echo $this->form->renderField('short_description'); ?>
+				<?php echo $this->form->renderField('description'); ?>
+				<?php echo $this->form->renderField('capacity'); ?>
+				<?php echo $this->form->renderField('size'); ?>
+				<?php echo $this->form->renderField('price'); ?>
 			</div>
 			<div class="col-lg-3">
 				<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
@@ -62,7 +59,7 @@ $form = $this->getForm();
 				<fieldset id="fieldset-images" class="options-form">
 					<legend><?php echo Text::_('COM_ROOMBOOKING_ROOM_IMAGE'); ?></legend>
 					<div>
-						<?php echo $form->renderField('image'); ?>
+						<?php echo $this->form->renderField('image'); ?>
 					</div>
 				</fieldset>
 			</div>
@@ -83,7 +80,7 @@ $form = $this->getForm();
 				<fieldset id="fieldset-metadata" class="options-form">
 					<legend><?php echo Text::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'); ?></legend>
 					<div>
-						<?php echo $form->renderFieldset('metadata'); ?>
+						<?php echo $this->form->renderFieldset('metadata'); ?>
 					</div>
 				</fieldset>
 			</div>

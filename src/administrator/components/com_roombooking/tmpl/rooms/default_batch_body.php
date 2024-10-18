@@ -16,8 +16,7 @@ use Joomla\CMS\Language\Multilanguage;
 
 /** @var \Joomla\Component\Roombooking\Administrator\View\Rooms\HtmlView $this */
 
-$state = $this->getState();
-$published = (int) $state->get('filter.published');
+$published = (int) $this->state->get('filter.published');
 ?>
 
 <div class="p-3">
