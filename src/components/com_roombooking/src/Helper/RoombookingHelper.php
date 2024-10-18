@@ -85,7 +85,9 @@ abstract class RoombookingHelper
             '{{recurrence_end_date}}' => Text::_('COM_ROOMBOOKING_MAIL_PLACEHOLDER_RECURRENCE_END_DATE'),
             '{{total_amount}}' => Text::_('COM_ROOMBOOKING_MAIL_PLACEHOLDER_TOTAL_AMOUNT'),
             '{{room_id}}' => Text::_('COM_ROOMBOOKING_MAIL_PLACEHOLDER_ROOM_ID'),
-            '{{room_name}}' => Text::_('COM_ROOMBOOKING_MAIL_PLACEHOLDER_ROOM_NAME')
+            '{{room_name}}' => Text::_('COM_ROOMBOOKING_MAIL_PLACEHOLDER_ROOM_NAME'),
+            '{{confirm_link}}' => Text::_('COM_ROOMBOOKING_MAIL_PLACEHOLDER_CONFIRM_LINK'),
+            '{{cancel_link}}' => Text::_('COM_ROOMBOOKING_MAIL_PLACEHOLDER_CANCEL_LINK')
         ];
     }
 }

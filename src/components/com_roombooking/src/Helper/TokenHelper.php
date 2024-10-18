@@ -32,20 +32,18 @@ abstract class TokenHelper
 	 * @param DatabaseInterface $db
 	 * @param int $bookingId
 	 * @param string $token
-	 * @param string $type
 	 * @param DateTime $expiresAt
 	 * @return bool
 	 */
-	public static function saveToken(DatabaseInterface $db, int $bookingId, string $token, string $type, DateTime $expiresAt): bool
+	public static function saveToken(DatabaseInterface $db, int $bookingId, string $token, DateTime $expiresAt): bool
 	{
 		$query = $db->getQuery(true);
 
 		$query->insert($db->quoteName('#__roombooking_tokens'))
-			->columns($db->quoteName(['booking_id', 'token', 'type', 'expires_at']))
+			->columns($db->quoteName(['booking_id', 'token', 'expires_at']))
 			->values(implode(',', [
 				$db->quote($bookingId),
 				$db->quote($token),
-				$db->quote($type),
 				$db->quote($expiresAt->format('Y-m-d H:i:s'))
 			]));
 
@@ -64,7 +62,7 @@ abstract class TokenHelper
 	{
 		$query = $db->getQuery(true);
 
-		$query->select(['booking_id', 'type'])
+		$query->select(['booking_id'])
 			->from($db->quoteName('#__roombooking_tokens'))
 			->where($db->quoteName('token') . ' = :token')
 			->bind(':token', $token, ParameterType::STRING)
@@ -79,17 +77,15 @@ abstract class TokenHelper
 	 * 
 	 * @param DatabaseInterface $db
 	 * @param int $bookingId
-	 * @param string $type
 	 * @return string|null
 	 */
-	public static function getTokenByBookingId(DatabaseInterface $db, int $bookingId, string $type): ?string
+	public static function getTokenByBookingId(DatabaseInterface $db, int $bookingId): ?string
 	{
 		$query = $db->getQuery(true);
 
 		$query->select('token')
 			->from($db->quoteName('#__roombooking_tokens'))
 			->where($db->quoteName('booking_id') . ' = ' . $db->quote($bookingId))
-			->where($db->quoteName('type') . ' = ' . $db->quote($type))
 			->where($db->quoteName('expires_at') . ' > NOW()')
 			->order($db->quoteName('created_at') . ' DESC')
 			->setLimit(1);

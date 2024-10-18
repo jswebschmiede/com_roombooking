@@ -81,21 +81,20 @@ class BookingController extends BaseController
      */
     private function prepareBookingDetails(array $data): string
     {
-        // TODO: translate the strings
-        $bookingDetails = "**Buchungsdatum:** {$data['booking_date']}\n\n";
-        $bookingDetails .= "**Wiederholend:** " . ($data['recurring'] ? "Ja" : "Nein") . "\n\n";
+        $bookingDetails = "**" . Text::_('COM_ROOMBOOKING_BOOKING_DATE_LBL') . ":** {$data['booking_date']}\n\n";
+        $bookingDetails .= "**" . Text::_('COM_ROOMBOOKING_BOOKING_RECURRING_LBL') . ":** " . ($data['recurring'] ? Text::_('JYES') : Text::_('JNO')) . "\n\n";
         if ($data['recurring']) {
-            $bookingDetails .= "**Wiederholungstyp:** " . RoombookingHelper::translateRecurrenceType($data['recurrence_type']) . "\n\n";
-            $bookingDetails .= '**Enddatum der Wiederholung:** ' . HTMLHelper::_('date', $data['recurrence_end_date'], Text::_('DATE_FORMAT_LC4')) . "\n\n";
+            $bookingDetails .= "**" . Text::_('COM_ROOMBOOKING_BOOKING_RECURRENCE_TYPE_LBL') . ":** " . RoombookingHelper::translateRecurrenceType($data['recurrence_type']) . "\n\n";
+            $bookingDetails .= '**' . Text::_('COM_ROOMBOOKING_BOOKING_RECURRENCE_END_DATE_LBL') . ':** ' . HTMLHelper::_('date', $data['recurrence_end_date'], Text::_('DATE_FORMAT_LC4')) . "\n\n";
         }
-        $bookingDetails .= "**Gesamtbetrag:** {$data['total_amount']}\n\n";
+        $bookingDetails .= "**" . Text::_('COM_ROOMBOOKING_BOOKING_TOTAL_AMOUNT_LBL') . ":** {$data['total_amount']}\n\n";
 
-        $bookingDetails .= "### Kundendaten:\n\n";
-        $bookingDetails .= "**Kundenname:** {$data['customer_name']}\n\n";
-        $bookingDetails .= "**E-Mail:** {$data['customer_email']}\n\n";
-        $bookingDetails .= "**Telefon:** {$data['customer_phone']}\n\n";
-        $bookingDetails .= "**Adresse:** {$data['customer_address']}\n\n";
-        $bookingDetails .= "**Raumname:** {$data['room_name']}\n";
+        $bookingDetails .= "### " . Text::_('COM_ROOMBOOKING_CUSTOMER_INFO') . ":\n\n";
+        $bookingDetails .= "**" . Text::_('COM_ROOMBOOKING_BOOKING_CUSTOMER_NAME_LBL') . ":** {$data['customer_name']}\n\n";
+        $bookingDetails .= "**" . Text::_('COM_ROOMBOOKING_BOOKING_CUSTOMER_EMAIL_LBL') . ":** {$data['customer_email']}\n\n";
+        $bookingDetails .= "**" . Text::_('COM_ROOMBOOKING_BOOKING_CUSTOMER_PHONE_LBL') . ":** {$data['customer_phone']}\n\n";
+        $bookingDetails .= "**" . Text::_('COM_ROOMBOOKING_BOOKING_CUSTOMER_ADDRESS_LBL') . ":** {$data['customer_address']}\n\n";
+        $bookingDetails .= "**" . Text::_('COM_ROOMBOOKING_ROOM_NAME_LBL') . ":** {$data['room_name']}\n";
 
         return $bookingDetails;
     }
@@ -109,6 +108,17 @@ class BookingController extends BaseController
     public function generateConfirmationLink(string $token): string
     {
         return Uri::root() . "index.php?option=com_roombooking&task=booking.confirm&token=" . $token;
+    }
+
+    /**
+     * Generate the cancellation link
+     *
+     * @param string $token
+     * @return string
+     */
+    public function generateCancellationLink(string $token): string
+    {
+        return Uri::root() . "index.php?option=com_roombooking&task=booking.cancel&token=" . $token;
     }
 
     /**
@@ -205,15 +215,17 @@ class BookingController extends BaseController
 
                 // Get the booking ID from the session
                 $bookingId = $this->app->getUserState('com_roombooking.booking.id');
-                $token = TokenHelper::getTokenByBookingId($db, $bookingId, 'email_confirmation');
+                $token = TokenHelper::getTokenByBookingId($db, $bookingId);
 
                 if (!$token) {
                     throw new \RuntimeException('No confirmation token found for this booking.');
                 }
 
                 $confirmLink = $this->generateConfirmationLink($token);
-
                 $customerMailTemplate->body = str_replace('{{confirm_link}}', $confirmLink, $customerMailTemplate->body);
+
+                $cancellationLink = $this->generateCancellationLink($token);
+                $customerMailTemplate->body = str_replace('{{cancel_link}}', $cancellationLink, $customerMailTemplate->body);
 
                 $this->sendEmail($adminMailTemplate, $validData, 'admin');
                 $this->sendEmail($customerMailTemplate, $validData, 'customer');
@@ -253,27 +265,52 @@ class BookingController extends BaseController
 
         $bookingId = $tokenObject->booking_id;
 
-        // TODO: translate the strings
-        if ($tokenObject->type === 'email_confirmation') {
-            if (
-                TokenHelper::deleteToken($db, $token) &&
-                $bookingModel->confirmBooking($bookingId)
-            ) {
-                $view->setData(Text::_('COM_ROOMBOOKING_BOOKING_CONFIRMED_SUCCESSFULLY'), 'success');
-            } else {
-                $view->setData(Text::_('COM_ROOMBOOKING_BOOKING_CONFIRMATION_FAILED'), 'danger');
-            }
+        if (
+            TokenHelper::deleteToken($db, $token) &&
+            $bookingModel->confirmBooking($bookingId)
+        ) {
+            $view->setData(Text::_('COM_ROOMBOOKING_BOOKING_CONFIRMED_SUCCESSFULLY'), 'success');
+        } else {
+            $view->setData(Text::_('COM_ROOMBOOKING_BOOKING_CONFIRMATION_FAILED'), 'danger');
+        }
 
+        $view->display();
+        return;
+
+    }
+
+    public function cancel(): void
+    {
+        /** @var \Joomla\Database\DatabaseDriver $db */
+        $db = Factory::getContainer()->get('DatabaseDriver');
+
+        /** @var \Joomla\Component\Roombooking\Site\Model\BookingModel $bookingModel */
+        $bookingModel = $this->getModel('booking', 'Site');
+
+        /** @var \Joomla\Component\Roombooking\Site\View\BookingConfirm\HtmlView $view */
+        $view = $this->getView('bookingConfirm', 'html');
+
+        $token = $this->input->get('token');
+        $tokenObject = TokenHelper::getValidTokenInfo($db, $token);
+
+        if (!$tokenObject) {
+            $view->setData(Text::_('COM_ROOMBOOKING_BOOKING_CONFIRMATION_NO_TOKEN'), 'danger');
             $view->display();
             return;
         }
 
-        if ($tokenObject->type === 'booking_cancellation') {
-            // TODO: cancel booking
+        $bookingId = $tokenObject->booking_id;
+
+        if (
+            TokenHelper::deleteToken($db, $token) &&
+            $bookingModel->cancelBooking($bookingId)
+        ) {
             $view->setData(Text::_('COM_ROOMBOOKING_BOOKING_CANCELLED_SUCCESSFULLY'), 'success');
-            $view->display();
-            return;
+        } else {
+            $view->setData(Text::_('COM_ROOMBOOKING_BOOKING_CANCEL_FAILED'), 'danger');
         }
 
+        $view->display();
+        return;
     }
 }

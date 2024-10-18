@@ -218,7 +218,7 @@ class BookingModel extends ItemModel
 			// Generate and save confirmation token
 			$token = TokenHelper::generateToken();
 			$expiresAt = new \DateTime('+24 hours');
-			TokenHelper::saveToken($db, $this->bookingId, $token, 'email_confirmation', $expiresAt);
+			TokenHelper::saveToken($db, $this->bookingId, $token, $expiresAt);
 
 			// If we've made it this far without exceptions, commit the transaction
 			$db->transactionCommit();
@@ -282,6 +282,33 @@ class BookingModel extends ItemModel
 			])
 			->where($db->quoteName('id') . ' = :booking_id')
 			->bind(':booking_id', $bookingId, ParameterType::INTEGER);
+
+		$db->setQuery($query);
+		return $db->execute();
+	}
+
+	/**
+	 * Cancel the booking
+	 * 
+	 * @param int $bookingId
+	 * @return bool
+	 */
+	public function cancelBooking(int $bookingId): bool
+	{
+		$db = $this->getDatabase();
+		$query = $db->getQuery(true);
+
+		$paymentStatus = 'cancelled';
+
+		$query->update($db->quoteName('#__roombooking_bookings'))
+			->set([
+				$db->quoteName('state') . ' = 0',
+				$db->quoteName('confirmed') . ' = 0',
+				$db->quoteName('payment_status') . ' = :payment_status'
+			])
+			->where($db->quoteName('id') . ' = :booking_id')
+			->bind(':booking_id', $bookingId, ParameterType::INTEGER)
+			->bind(':payment_status', $paymentStatus, ParameterType::STRING);
 
 		$db->setQuery($query);
 		return $db->execute();

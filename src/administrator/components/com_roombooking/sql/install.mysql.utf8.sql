@@ -76,7 +76,6 @@ CREATE TABLE IF NOT EXISTS `#__roombooking_tokens` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`booking_id` int(11) NOT NULL,
 	`token` varchar(64) NOT NULL,
-	`type` enum('email_confirmation', 'booking_cancellation') NOT NULL,
 	`created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`expires_at` timestamp NOT NULL,
 	PRIMARY KEY (`id`),
