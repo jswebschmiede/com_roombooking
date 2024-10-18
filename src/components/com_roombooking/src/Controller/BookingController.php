@@ -246,7 +246,7 @@ class BookingController extends BaseController
         $tokenObject = TokenHelper::getValidTokenInfo($db, $token);
 
         if (!$tokenObject) {
-            $view->setData('No token found for this booking.', 'danger');
+            $view->setData(Text::_('COM_ROOMBOOKING_BOOKING_CONFIRMATION_NO_TOKEN'), 'danger');
             $view->display();
             return;
         }
@@ -259,9 +259,9 @@ class BookingController extends BaseController
                 TokenHelper::deleteToken($db, $token) &&
                 $bookingModel->confirmBooking($bookingId)
             ) {
-                $view->setData('Booking confirmed successfully', 'success');
+                $view->setData(Text::_('COM_ROOMBOOKING_BOOKING_CONFIRMED_SUCCESSFULLY'), 'success');
             } else {
-                $view->setData('Booking confirmation failed', 'danger');
+                $view->setData(Text::_('COM_ROOMBOOKING_BOOKING_CONFIRMATION_FAILED'), 'danger');
             }
 
             $view->display();
@@ -270,7 +270,7 @@ class BookingController extends BaseController
 
         if ($tokenObject->type === 'booking_cancellation') {
             // TODO: cancel booking
-            $view->setData('Booking cancelled successfully', 'success');
+            $view->setData(Text::_('COM_ROOMBOOKING_BOOKING_CANCELLED_SUCCESSFULLY'), 'success');
             $view->display();
             return;
         }
