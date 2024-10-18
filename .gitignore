@@ -30,4 +30,4 @@ dist
 todos.txt
 
 composer.lock
-**/vendor
+**/administrator/**/vendor
