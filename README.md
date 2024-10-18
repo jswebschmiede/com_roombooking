@@ -20,9 +20,10 @@ Room Booking is a component for booking rooms. It is a simple component that all
 
 ## Prerequisites
 
--   Node.js (version 14 or higher)
+-   Node.js (version 21.5.0 or higher)
 -   pnpm (can be installed globally with `npm install -g pnpm`)
 -   Joomla 5.x or higher (tested with Joomla 5.0)
+-   PHP 8.3 or higher (tested with PHP 8.3)
 
 ## Installation
 
@@ -42,6 +43,12 @@ Room Booking is a component for booking rooms. It is a simple component that all
 
     ```
     pnpm install
+    ```
+
+4. Install Composer dependencies:
+
+    ```
+    composer install
     ```
 
 ## Usage
@@ -87,6 +94,7 @@ This creates an optimized version of the component and packages it into a ZIP fi
 -   `webpack.config.js`: Webpack configuration
 -   `tailwind.config.js`: Tailwind CSS configuration
 -   `package.json`: Project dependencies and scripts
+-   `composer.json`: Composer dependencies
 
 ## Contributing
 
