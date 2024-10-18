@@ -168,7 +168,7 @@ class RoomModel extends FormModel
 	{
 		$form = $this->loadForm(
 			'com_roombooking.room',
-			'room_form',
+			'booking_form',
 			array(
 				'control' => 'jform',
 				'load_data' => $loadData

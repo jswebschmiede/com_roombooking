@@ -48,9 +48,11 @@ class BookingController extends BaseController
         $data['room_name'] = $room->name;
 
         foreach (RoombookingHelper::getMailPlaceholders() as $placeholder => $label) {
-            if (isset($data[$placeholder])) {
-                $template->body = str_replace($placeholder, $data[$placeholder], $template->body);
-                $template->subject = str_replace($placeholder, $data[$placeholder], $template->subject);
+            $placeholderWithoutBraces = trim($placeholder, '{}');
+
+            if (isset($data[$placeholderWithoutBraces])) {
+                $template->body = str_replace($placeholder, $data[$placeholderWithoutBraces], $template->body);
+                $template->subject = str_replace($placeholder, $data[$placeholderWithoutBraces], $template->subject);
             }
 
             // Check if booking_details placeholder exists in template body
