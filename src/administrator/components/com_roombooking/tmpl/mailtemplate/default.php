@@ -14,7 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Language\Multilanguage;
 use Joomla\Component\Roombooking\Site\Helper\RoombookingHelper;
 
 /** @var \Joomla\Component\Roombooking\Administrator\View\Mailtemplate\HtmlView $this */
@@ -64,7 +64,9 @@ $doc->addScriptOptions('com_roombooking', [
 				<?php endif ?>
 			</div>
 			<div class="col-lg-3">
-				<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
+				<?php if (Multilanguage::isEnabled()): ?>
+					<?php echo $this->form->renderField('language'); ?>
+				<?php endif; ?>
 			</div>
 		</div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
@@ -76,26 +78,3 @@ $doc->addScriptOptions('com_roombooking', [
 	<input type="hidden" name="task" value="">
 	<?php echo HTMLHelper::_('form.token'); ?>
 </form>
-
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel"><?php echo Text::_('COM_ROOMBOOKING_MODAL_TITLE'); ?>
-				</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"
-					aria-label="<?php echo Text::_('JCLOSE'); ?>"></button>
-			</div>
-			<div class="modal-body">
-				<?php echo Text::_('COM_ROOMBOOKING_MODAL_CONTENT'); ?>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary"
-					data-bs-dismiss="modal"><?php echo Text::_('JCLOSE'); ?></button>
-				<button type="button"
-					class="btn btn-primary"><?php echo Text::_('COM_ROOMBOOKING_SAVE_CHANGES'); ?></button>
-			</div>
-		</div>
-	</div>
-</div>

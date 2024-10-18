@@ -46,12 +46,12 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 								<?php echo HTMLHelper::_('grid.checkall'); ?>
 							</td>
 
-							<th scope="col" class="w-5 text-center">
-								<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
+							<th scope="col" class="w-15">
+								<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.name', $listDirn, $listOrder); ?>
 							</th>
 
 							<th scope="col" class="w-15">
-								<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.name', $listDirn, $listOrder); ?>
+								<?php echo Text::_('COM_ROOMBOOKING_FIELD_FROM_EMAIL_DESC'); ?>
 							</th>
 
 							<?php if (Multilanguage::isEnabled()): ?>
@@ -75,10 +75,6 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 									<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
 								</td>
 
-								<td class="article-status text-center">
-									<?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'mailtemplates.', $canChange, 'cb'); ?>
-								</td>
-
 								<th scope="row" class="has-context">
 									<div class="break-word">
 										<?php if ($canEdit): ?>
@@ -94,6 +90,10 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 										<?php endif; ?>
 									</div>
 								</th>
+
+								<td>
+									<?php echo $item->from_email; ?>
+								</td>
 
 								<?php if (Multilanguage::isEnabled()): ?>
 									<td class="small d-none d-md-table-cell">
