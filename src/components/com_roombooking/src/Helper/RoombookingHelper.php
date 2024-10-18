@@ -67,6 +67,23 @@ abstract class RoombookingHelper
     }
 
     /**
+     * Translate payment status
+     *
+     * @param string $paymentStatus
+     * @return string
+     */
+    public static function translatePaymentStatus(string $paymentStatus): string
+    {
+        $translations = [
+            'paid' => Text::_('COM_ROOMBOOKING_PAYMENT_STATUS_PAID'),
+            'unpaid' => Text::_('COM_ROOMBOOKING_PAYMENT_STATUS_UNPAID'),
+            'cancelled' => Text::_('COM_ROOMBOOKING_PAYMENT_STATUS_CANCELLED')
+        ];
+
+        return $translations[$paymentStatus] ?? $paymentStatus;
+    }
+
+    /**
      * Get the mail placeholders.
      *
      * @return array

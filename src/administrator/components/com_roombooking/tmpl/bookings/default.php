@@ -14,6 +14,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Language\Multilanguage;
+use Joomla\Component\Roombooking\Site\Helper\RoombookingHelper;
 
 defined('_JEXEC') or die;
 
@@ -186,14 +187,30 @@ $editIcon = '<span class="fa fa-pen-square mr-2" aria-hidden="true"></span>';
 									</td>
 
 									<td>
-										<?php echo $item->payment_status; ?>
+										<?php
+										$statusColor = '';
+										switch ($item->payment_status) {
+											case 'paid':
+												$statusColor = 'text-success';
+												break;
+											case 'unpaid':
+												$statusColor = 'text-primary';
+												break;
+											case 'cancelled':
+												$statusColor = 'text-danger';
+												break;
+										}
+										?>
+										<span class="fw-bold <?php echo $statusColor; ?>">
+											<?php echo RoombookingHelper::translatePaymentStatus($item->payment_status); ?>
+										</span>
 									</td>
 
 									<th scope="row" class="has-context">
 										<?php echo $item->recurring ? Text::_('JYES') : Text::_('JNO'); ?>
 										<?php if ($item->recurring): ?>
 											<div class="small">
-												<?php echo '<span class="bold">' . Text::_('COM_ROOMBOOKING_BOOKING_RECURRENCE_TYPE_LBL') . ': </span>' . $this->escape($item->recurrence_type); ?>
+												<?php echo '<span class="fw-bold">' . Text::_('COM_ROOMBOOKING_BOOKING_RECURRENCE_TYPE_LBL') . ': </span>' . $this->escape($item->recurrence_type); ?>
 											</div>
 											<div class="small">
 												<?php echo Text::_('COM_ROOMBOOKING_BOOKING_RECURRENCE_END_DATE_LBL') . ': <br> ' . HTMLHelper::_('date', $item->recurrence_end_date, Text::_('DATE_FORMAT_LC1')); ?>
