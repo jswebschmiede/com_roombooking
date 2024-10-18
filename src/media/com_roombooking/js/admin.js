@@ -19,7 +19,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const easyMDE = new EasyMDE({
         element: document.getElementById('jform_body'),
         hideIcons: ['fullscreen', 'side-by-side', 'image', 'upload-image', 'heading'],
-        showIcons: ['heading-1', 'heading-2', 'heading-3', 'undo', 'redo', 'horizontal-rule'],
+        showIcons: [
+            'heading-1',
+            'heading-2',
+            'heading-3',
+            'undo',
+            'redo',
+            'horizontal-rule',
+            'guide',
+        ],
         spellChecker: false,
         status: false,
         promptURLs: true,
@@ -41,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
             'redo',
             '|',
             'preview',
+            'guide',
             '|',
             {
                 name: 'custom',
