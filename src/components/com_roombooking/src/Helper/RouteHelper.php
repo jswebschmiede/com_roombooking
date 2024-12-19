@@ -34,10 +34,10 @@ abstract class RouteHelper
      *
      * @since   1.0.0
      */
-    public static function getRoomRoute($id, $slug, $language = null, $layout = null): string
+    public static function getRoomRoute($id, $language = null, $layout = null): string
     {
         // Create the link
-        $link = 'index.php?option=com_roombooking&view=room&id=' . $id . '&slug=' . $slug;
+        $link = 'index.php?option=com_roombooking&view=room&id=' . $id;
 
         if (!empty($language) && $language !== '*' && Multilanguage::isEnabled()) {
             $link .= '&lang=' . $language;

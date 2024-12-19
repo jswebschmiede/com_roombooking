@@ -91,7 +91,9 @@ class HtmlView extends BaseHtmlView
 		$this->pagination->hideEmptyLimitstart = true;
 
 		foreach ($this->items as &$item) {
-			$item->link = Route::_(RouteHelper::getRoomRoute($item->id, $item->alias));
+			$item->slug = $item->alias ? ($item->id . ':' . $item->alias) : $item->id;
+
+			$item->link = Route::_(RouteHelper::getRoomRoute($item->slug, $item->language));
 			$item->price = RoombookingHelper::formatPrice($item->price);
 		}
 

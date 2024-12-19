@@ -21,7 +21,6 @@ use Joomla\CMS\Component\Router\Rules\NomenuRules;
 use Joomla\CMS\Categories\CategoryFactoryInterface;
 use Joomla\CMS\Component\Router\Rules\StandardRules;
 use Joomla\CMS\Component\Router\RouterViewConfiguration;
-use Joomla\Component\Roombooking\Site\Service\RoombookingNomenuRules;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -75,20 +74,20 @@ class Router extends RouterView
         $params = ComponentHelper::getParams('com_roombooking');
         $this->noIDs = (bool) $params->get('sef_ids');
 
+        $rooms = new RouterViewConfiguration('rooms');
+        $rooms->setKey('id');
+        $this->registerView($rooms);
+
         $room = new RouterViewConfiguration('room');
         $room->setKey('id');
         $this->registerView($room);
 
-        $rooms = new RouterViewConfiguration('rooms');
-        $rooms->setKey('id');
-        $this->registerView($rooms);
 
         parent::__construct($app, $menu);
 
         $this->attachRule(new MenuRules($this));
         $this->attachRule(new StandardRules($this));
         $this->attachRule(new NomenuRules($this));
-        $this->attachRule(new RoombookingNomenuRules($this));
     }
 
     /**
@@ -99,7 +98,7 @@ class Router extends RouterView
      *
      * @return  array|string  The segments of this item
      */
-    public function getRoombookingSegment($id, $query)
+    public function getRoomSegment($id, $query)
     {
         if (!strpos($id, ':')) {
             $id = (int) $id;
@@ -129,7 +128,7 @@ class Router extends RouterView
      */
     public function getFormSegment($id, $query): array|string
     {
-        return $this->getRoombookingSegment($id, $query);
+        return $this->getRoomSegment($id, $query);
     }
 
     /**
@@ -140,7 +139,7 @@ class Router extends RouterView
      *
      * @return  mixed   The id of this item or false
      */
-    public function getRoombookingId($segment, $query)
+    public function getRoomId($segment, $query)
     {
         if ($this->noIDs) {
             $dbquery = $this->db->getQuery(true);
