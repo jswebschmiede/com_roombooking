@@ -31,3 +31,4 @@ todos.txt
 
 composer.lock
 **/administrator/**/vendor
+**/dependencies/*

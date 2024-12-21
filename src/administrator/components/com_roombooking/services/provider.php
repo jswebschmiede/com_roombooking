@@ -22,7 +22,7 @@ use Joomla\CMS\Extension\Service\Provider\ComponentDispatcherFactory;
 use Joomla\Component\Roombooking\Administrator\Extension\RoombookingComponent;
 
 // Load Composer autoloader
-require_once JPATH_ADMINISTRATOR . '/components/com_roombooking/vendor/autoload.php';
+require_once JPATH_ADMINISTRATOR . '/components/com_roombooking/dependencies/vendor/autoload.php';
 
 /**
  * The service provider.
