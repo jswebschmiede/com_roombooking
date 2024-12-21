@@ -8,10 +8,5 @@
     },
     "require": {
         "erusev/parsedown": "^1.7"
-    },
-    "scripts": {
-        "prefix-autoload": [
-            "php-scoper add-prefix"
-        ]
     }
 }
