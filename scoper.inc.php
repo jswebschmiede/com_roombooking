@@ -27,7 +27,7 @@ return [
     // will be generated instead.
     //
     // For more see: https://github.com/humbug/php-scoper/blob/master/docs/configuration.md#prefix
-    'prefix' => 'Roombooking',
+    'prefix' => 'Joomla\\Component\\Roombooking',
 
     // The base output directory for the prefixed files.
     // This will be overridden by the 'output-dir' command line option if present.
