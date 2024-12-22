@@ -20,14 +20,15 @@ use Isolated\Symfony\Component\Finder\Finder;
 //         false,
 //     ),
 // );
-$excludedFiles = [];
+$excludedFiles = [
+];
 
 return [
     // The prefix configuration. If a non-null value is used, a random prefix
     // will be generated instead.
     //
     // For more see: https://github.com/humbug/php-scoper/blob/master/docs/configuration.md#prefix
-    'prefix' => 'Joomla\\Component\\Roombooking',
+    'prefix' => 'Roombooking\\Vendor',
 
     // The base output directory for the prefixed files.
     // This will be overridden by the 'output-dir' command line option if present.
@@ -82,7 +83,6 @@ return [
     'patchers' => [
         static function (string $filePath, string $prefix, string $contents): string {
             // Change the contents here.
-        
             return $contents;
         },
     ],
