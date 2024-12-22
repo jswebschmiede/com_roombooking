@@ -17,6 +17,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\Component\Roombooking\Site\Helper\TokenHelper;
+use Roombooking\Vendor\League\CommonMark\CommonMarkConverter;
 use Joomla\Component\Roombooking\Site\Helper\RoombookingHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -67,8 +68,8 @@ class BookingController extends BaseController
         }
 
         // Convert markdown to html
-        $parsedown = new \Parsedown();
-        $template->body = $parsedown->text($template->body);
+        $converter = new CommonMarkConverter();
+        $template->body = $converter->convert($template->body);
 
         return $template;
     }
