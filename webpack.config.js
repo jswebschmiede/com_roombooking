@@ -62,14 +62,6 @@ module.exports = (env, argv) => {
         {
             from: 'src/administrator/components/com_roombooking',
             to: 'administrator/components/com_roombooking',
-            globOptions: {
-                ignore: [
-                    '**/components/com_roombooking/vendor', // Nur das Hauptverzeichnis vendor
-                    '**/components/com_roombooking/composer.json', // Ignoriert composer.json
-                    '**/components/com_roombooking/composer.lock', // Ignoriert composer.lock
-                    '**/components/com_roombooking/scoper.inc.php', // Ignoriert scoper.inc.php
-                ],
-            },
         },
         {
             from: 'src/components/com_roombooking',
