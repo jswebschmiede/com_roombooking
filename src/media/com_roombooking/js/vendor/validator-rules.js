@@ -6,28 +6,44 @@ export function updateRecurrenceEndDateRequired() {
     let feedback = document.querySelector('.form-control-feedback');
 
     if (recurringRadio && recurringRadio.value === '1') {
-        endDateField.setAttribute('required', 'required');
-        recurrenceTypeSelect.setAttribute('required', 'required');
-        recurrenceTypeSelect.classList.add('validate-validRecurrenceType');
+        if (endDateField) {
+            endDateField.setAttribute('required', 'required');
+        }
+        if (recurrenceTypeSelect) {
+            recurrenceTypeSelect.setAttribute('required', 'required');
+            recurrenceTypeSelect.classList.add('validate-validRecurrenceType');
+        }
     } else {
-        endDateField.removeAttribute('required');
-        recurrenceTypeSelect.removeAttribute('required');
-        recurrenceTypeSelect.classList.remove('validate-validRecurrenceType');
-        recurrenceTypeSelect.selectedIndex = 0;
+        if (endDateField) {
+            endDateField.removeAttribute('required');
+        }
+        if (recurrenceTypeSelect) {
+            recurrenceTypeSelect.removeAttribute('required');
+            recurrenceTypeSelect.classList.remove('validate-validRecurrenceType');
+            recurrenceTypeSelect.selectedIndex = 0;
+        }
         if (feedback) {
             feedback.remove();
         }
 
-        document.formvalidator.markValid(endDateField);
-        document.formvalidator.markValid(recurrenceTypeSelect);
+        if (typeof document.formvalidator !== 'undefined') {
+            if (endDateField) {
+                document.formvalidator.markValid(endDateField);
+            }
+            if (recurrenceTypeSelect) {
+                document.formvalidator.markValid(recurrenceTypeSelect);
+            }
+        }
     }
 }
 
 // Define a custom validation rule for the recurrence type select
 export function setValidRecurrenceTypeHandler() {
-    document.formvalidator.setHandler('validRecurrenceType', function (value) {
-        return value !== 'none';
-    });
+    if (typeof document.formvalidator !== 'undefined') {
+        document.formvalidator.setHandler('validRecurrenceType', function (value) {
+            return value !== 'none';
+        });
+    }
 }
 
 // Add event listeners to the recurring radio buttons

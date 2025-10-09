@@ -11,6 +11,11 @@ import '../css/site.css';
 
 document.addEventListener('DOMContentLoaded', function () {
     const options = Joomla.getOptions('com_roombooking');
+
+    if (!options?.bookedDates) {
+        return;
+    }
+
     const bookedDates = JSON.parse(options.bookedDates);
     const endDate = options.endDate;
 
