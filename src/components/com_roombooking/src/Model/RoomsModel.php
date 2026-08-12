@@ -182,7 +182,7 @@ class RoomsModel extends ListModel
 
     /**
      * Summary of getFormFactory
-     * 
+     *
      * @return FormFactoryInterface
      */
     public function getFormFactory(): FormFactoryInterface
@@ -192,7 +192,7 @@ class RoomsModel extends ListModel
 
     /**
      * Summary of getListQuery
-     * 
+     *
      * @return DatabaseQuery
      */
     protected function getListQuery(): DatabaseQuery
